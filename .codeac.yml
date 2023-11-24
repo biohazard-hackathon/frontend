@@ -1,0 +1,11 @@
+version: '1'
+
+thresholds:
+  error: 90
+  total: 150
+
+tools:
+  eslint:
+    ext: '.js,.ts,.jsx,.tsx'
+  tslint:
+    enabled: false
