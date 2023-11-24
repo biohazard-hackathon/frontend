@@ -17,3 +17,18 @@
     }
   }
 }
+
+.navbar-brand {
+  color: $red-500;
+}
+
+.navbar {
+  background-color: $gray-700;
+
+  .nav-link {
+    color: $gray-100;
+     &:hover {
+      color: $red;
+     }
+  }
+}

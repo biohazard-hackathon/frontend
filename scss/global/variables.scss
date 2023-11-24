@@ -3,8 +3,9 @@
 $color-black: #000;
 $color-white: #fff;
 
+$color-dark-grey: #3f3f3f;
 
-//$primary: #326b9d;
+$primary: #326b9d;
 
 
 $pixelratio-1x: 96dpi;
@@ -12,8 +13,8 @@ $pixelratio-2x: 192dpi;
 
 $breadcrumb-divider: quote('>');
 
-$header-height: 4rem;
-$header-height-md: 4.8125rem;
+$header-height: 0;
+$header-height-md: 0;
 
 @import '../../node_modules/bootstrap/scss/variables';
 @import '../../node_modules/bootstrap/scss/variables-dark';

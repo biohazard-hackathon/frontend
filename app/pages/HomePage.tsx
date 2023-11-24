@@ -2,19 +2,9 @@ import React, {FC, useEffect, useState} from 'react';
 import Icon from "../components/Icon";
 import {useTranslation} from 'react-i18next';
 import {Auth} from 'aws-amplify';
+import { IUserInfo } from '../types';
 
 interface Props {
-}
-
-interface IUserInfo {
-	attributes: {
-		sub: string,
-		email: string,
-		email_verified: boolean,
-		name: string,
-	},
-	id: string | undefined,
-	username: string
 }
 
 export const HomePage: FC<Props> = ({}) => {
@@ -37,7 +27,6 @@ export const HomePage: FC<Props> = ({}) => {
 				// todo redirect to error page
 			}
 		})();
-
 	}, [isSignedIn]);
 
 	const {t} = useTranslation();

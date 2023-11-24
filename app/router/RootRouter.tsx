@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-
-
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
 import ErrorPage from '../pages/ErrorPage';
 import HomePage from '../pages/HomePage';
 import { AfterLogin } from '../pages/AfterLogin';
+import { Analyse } from '../pages/Analyse';
 
 interface Props {
 }
@@ -20,6 +19,7 @@ export default class RootRouter extends Component<Props, State> {
 				<Route path="/" element={<HomePage {...this.props}/>}/>
 				<Route path="*" element={<ErrorPage {...this.props}/>}/>
 				<Route path="/after-login" element={<AfterLogin {...this.props}/>}/>
+				<Route path="/analyse" element={<Analyse {...this.props}/>}/>
 			</Routes>
 		</BrowserRouter>;
 	}

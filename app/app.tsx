@@ -1,12 +1,12 @@
-import React, {FC} from 'react';
-import {Provider as ReduxProvider} from 'react-redux';
-import {I18nextProvider} from 'react-i18next';
+import React, { FC } from 'react';
+import { Provider as ReduxProvider } from 'react-redux';
+import { I18nextProvider } from 'react-i18next';
 
 import i18n from './locales';
 import RootRouter from './router/RootRouter';
 import store from './store/configureStore';
 
-import {Amplify} from 'aws-amplify';
+import { Amplify } from 'aws-amplify';
 import {
 	AWS_REGION,
 	HOSTED_UI_DOMAIN,
@@ -15,12 +15,11 @@ import {
 	USER_POOL_ID,
 	USER_POOL_WEB_CLIENT_ID,
 } from './constants/env';
+import { Navbar } from './components/Navbar';
 
 interface Props {
 }
 
-interface State {
-}
 const App: FC<Props> = (props) => {
 	Amplify.configure({
 		Auth: {
@@ -45,7 +44,10 @@ const App: FC<Props> = (props) => {
 	return <React.StrictMode>
 		<ReduxProvider store={store}>
 			<I18nextProvider i18n={i18n}>
-				{<RootRouter {...props} />}
+				<Navbar />
+				<div className="container mt-5">
+					<RootRouter {...props} />
+				</div>
 			</I18nextProvider>
 		</ReduxProvider>
 	</React.StrictMode>;
