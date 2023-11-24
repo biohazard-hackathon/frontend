@@ -21,6 +21,10 @@ type QuestionResult @aws_api_key @aws_cognito_user_pools @aws_iam {
     output: String!
 }
 
+type HealthCheckResult @aws_api_key @aws_cognito_user_pools @aws_iam {
+    status: String!
+}
+
 
 """
 The query root of GraphQL API.
@@ -29,7 +33,7 @@ type Query {
     """
     Returns a status of the infrastructure
     """
-    healthCheck: String
+    healthCheck: HealthCheckResult
 }
 
 """

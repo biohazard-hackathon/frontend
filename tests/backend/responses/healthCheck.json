@@ -1,4 +1,4 @@
 {
-  "healthCheck": "Healthy :)",
+  "status": "Healthy :)",
   "__typename": "String"
 }
