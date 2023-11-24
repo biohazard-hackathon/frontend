@@ -19,12 +19,6 @@ jobs:
       - name: Clean & Build
         run: docker-compose run frontend make -C release/ clean package
 
-      - name: Store Artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: ticha-website # double zipping issue: https://github.com/actions/upload-artifact/issues/39
-          path: release/release/ticha-website.zip
-
       - name: Release
         run: make -C release/ release AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
         env:
