@@ -1,0 +1,65 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs'
+import IconDocs from '../../app/docs/IconDocs';
+import Icon from '../../app/components/Icon'
+
+<Meta title="Base/Icons" component={Icon} parameters={{ previewTabs: { canvas: { hidden: true } } }}/>
+
+export const Template = (args) => <IconDocs {...args} />;
+
+# Icons
+Icons are essential visual elements in the application design language.
+Clear naming helps to reuse the icons as efficiently as possible.
+Make sure to name each icon by its visual appearance.
+Naming an icon by its usage is usually very limiting and often results in worse reusability.
+
+Icons can be colored in different parts of the application.
+Each icon is represented by an icon font as a "letter".
+Therefore, coloring a single "letter" with two and more different colors is not possible.
+
+## Animations
+Icons can also be animated by several parameters.
+Boolean parameters `spin` and `pulse` can help the icon to create a standard loading animation.
+
+<Canvas>
+	<Icon name="spinner" spin="true" size="3x"/>
+	<Icon name="spinner" pulse="true" size="3x"/>
+</Canvas>
+
+## Sizes
+String parameter `size` allows to modify the size of the icon.
+
+<Canvas>
+	<Icon name="times"/>
+	<Icon name="times" size="lg"/>
+	<Icon name="times" size="2x"/>
+	<Icon name="times" size="3x"/>
+	<Icon name="times" size="4x"/>
+	<Icon name="times" size="5x"/>
+</Canvas>
+
+## Icon Gallery
+This is a complete list of all available icons grouped into different sections by their purpose.
+
+### System
+
+<Canvas>
+	<Story
+		name="System"
+		args={{
+			type: 'system',
+		}}>
+		{Template.bind({})}
+	</Story>
+</Canvas>
+
+### Other
+
+<Canvas>
+	<Story
+		name="Other"
+		args={{
+			type: 'other',
+		}}>
+		{Template.bind({})}
+	</Story>
+</Canvas>

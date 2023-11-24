@@ -1,0 +1,49 @@
+import ColorsDocs from '../../app/docs/ColorsDocs'
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+
+<Meta title="Base/Colors" component={ColorsDocs} parameters={{ previewTabs: { canvas: { hidden: true } } }}/>
+
+export const Template = (args) => <ColorsDocs {...args} />;
+
+# Colors
+
+This list of color should represent all possible color in the application.
+Variants of these color can be used to derive a specific shade by using SASS functions like `darken($primary, 10%)` or `lighten($secondary, 15%)`.
+Always think about interconnections, please.
+If a color is changed here, all derivations across the application are affected.
+
+Naming is an essential part of every color.
+Color identifier should be versatile enough, so it can be used for the whole lifetime of the app.
+Do not name the color by their usage.
+Name them by their mood, meaning or so.
+Usage of color can change but name should be persistent.
+Also, same color can be used across components and pages so the naming has to be still relevant and understandable.
+
+## Brand
+
+This set of color define a unique visual style that is later used across components to represent the application brand.
+
+<Canvas>
+	<Story
+		name="Brand"
+		args={{
+			type: 'brand',
+		}}>
+		{Template.bind({})}
+	</Story>
+</Canvas>
+
+## System
+
+This set of color is used to specify system states.
+For example a delete button would use the `danger` mood.
+
+<Canvas>
+	<Story
+		name="System"
+		args={{
+			type: 'system',
+		}}>
+		{Template.bind({})}
+	</Story>
+</Canvas>
