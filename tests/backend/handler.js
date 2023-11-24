@@ -23,13 +23,13 @@ const resolverMap = {
 		},
 	},
 	Subscription: {
-		onStateChange() {
-			return readResponse('stateChange');
+		onQuestionResult() {
+			return readResponse('questionResult');
 		},
 	},
 	Mutation: {
-		changeState() {
-			return readResponse('stateChange');
+		question() {
+			return readResponse('questionResult');
 		},
 	},
 };
