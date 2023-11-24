@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  api-mock-graphql:
+    image: michalsimon/gqlmocks:latest
+    command: npx gqlmocks serve --port=4001 --handler=/gqlmocks/handler.js --schema=/gqlmocks/api.graphql
+    volumes:
+      - ./tests/backend/api.graphql:/gqlmocks/api.graphql
+      - ./tests/backend/handler.js:/gqlmocks/handler.js
+      - ./tests/backend/responses:/gqlmocks/responses/
+    expose:
+      - 4001
+
+  frontend:
+    build: .
+    environment:
+      FORCE_COLOR: "true"
+      API_URL: http://api-mock-graphql:4001
+    volumes:
+      - .:/www/
+    working_dir: /www

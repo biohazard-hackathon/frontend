@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  api-mock-graphql:
+    ports:
+      - 4001:4001
+
+  frontend:
+    ports:
+      - 3001:3001
+      - 8081:8081
+      - 9011:9011 # Storybook
+      - 9229:9229
+    command: /bin/bash -c "npm install && npx gulp --color"
