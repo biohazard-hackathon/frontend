@@ -22,6 +22,16 @@ const resolverMap = {
 			return readResponse('healthCheck');
 		},
 	},
+	Subscription: {
+		onStateChange() {
+			return readResponse('stateChange');
+		},
+	},
+	Mutation: {
+		changeState() {
+			return readResponse('stateChange');
+		},
+	},
 };
 
 module.exports = new GraphQLHandler({
