@@ -1,8 +1,6 @@
 .idea/*
 !.idea/.name
 !.idea/inspectionProfiles/Project_Default.xml
-!.idea/misc.xml
-!.idea/vcs.xml
 node_modules/
 www/css/
 www/fonts/
