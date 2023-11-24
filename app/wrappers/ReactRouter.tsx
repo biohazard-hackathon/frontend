@@ -13,14 +13,14 @@ export interface WithRouter {
 	router: Router,
 }
 
-export default function withRouter(Component: ComponentType<any>) {
-	function ComponentWithRouterProp(props: any) {
-		const location = useLocation();
-		const navigate = useNavigate();
-		const params = useParams();
+// export default function withRouter(Component: ComponentType<any>) {
+// 	function ComponentWithRouterProp(props: any) {
+// 		const location = useLocation();
+// 		const navigate = useNavigate();
+// 		const params = useParams();
 
-		return <Component {...props} router={{ location, navigate, params } as Router}/>;
-	}
+// 		return <Component {...props} router={{ location, navigate, params } as Router}/>;
+// 	}
 
-	return ComponentWithRouterProp;
-}
+// 	return ComponentWithRouterProp;
+// }

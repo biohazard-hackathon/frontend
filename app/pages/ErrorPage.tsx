@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, FC } from 'react';
 
 interface Props {
 	code?: number,
@@ -7,8 +7,8 @@ interface Props {
 interface State {
 }
 
-export default class ErrorPage extends Component<Props, State> {
-	render() {
-		return <h1>Error</h1>;
-	}
+export const ErrorPage: FC<Props> = () => {
+	return <h1>Error</h1>;
 }
+
+export default ErrorPage
