@@ -1,3 +1,8 @@
 PUBLIC_URL: '/'
 API_URL: 'http://localhost:4001'
 version: '@dev'
+HOSTED_UI_DOMAIN: 'biohazard-staging.auth.us-east-1.amazoncognito.com'
+REDIRECT_SIGN_IN: 'http://localhost:8081/after-login'
+REDIRECT_SIGN_OUT: 'http://localhost:8081'
+USER_POOL_ID: ''
+USER_POOL_WEB_CLIENT_ID: ''
