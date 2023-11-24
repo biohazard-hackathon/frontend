@@ -1,21 +1,24 @@
-import React, { FC, useState } from "react"
+import React, { FC, useState } from "react";
+import BackendApi from '../api/BackendApi';
 
 interface Props {
 
 }
 
 export const Analyse: FC<Props> = () => {
-	const [formData, setFormData] = useState({})
+	const [formData, setFormData] = useState({});
 
 	const handleChange = (event: any) => {
 		console.log('event', event);
 		const {name, value} = event.target;
-		setFormData((prevFormData) => ({...prevFormData, [name]: value}))
-	}
+		setFormData((prevFormData) => ({...prevFormData, [name]: value}));
+	};
 
-	const handleSubmit = () => {
-		console.log('formData', formData)
-	}
+	const handleSubmit = async () => {
+		console.log('formData', formData);
+		const output = await BackendApi.healthCheck();
+		console.log(output);
+	};
 
 	return (
 		<>
@@ -34,5 +37,5 @@ export const Analyse: FC<Props> = () => {
 				{Object.values(formData).map((item) => <div className="">{item}</div>)}
 			</div>
 		</>
-	)
-}
+	);
+};
