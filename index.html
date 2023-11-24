@@ -1,0 +1,33 @@
+<!doctype html>
+<html class="no-js" lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Biohazard</title>
+    <meta name="description" content="Biohazard">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="stylesheet" href="<%= PUBLIC_URL %>css/style-main.min.css?v<%= version %>">
+    <link rel="icon" href="<%= PUBLIC_URL %>images/favicon.ico" type="image/x-icon">
+    <meta name="theme-color" content="#000000">
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono" rel="stylesheet">
+</head>
+<body>
+<noscript>
+    You need to enable JavaScript to run this app.
+</noscript>
+<div id="root"
+     data-version="<%= version %>"
+     data-public-url="<%= PUBLIC_URL %>"
+     data-api-url="<%= API_URL %>"
+></div>
+<div id="modal-root"></div>
+<script type="text/javascript" src="<%= PUBLIC_URL %>js/app-main.js?v<%= version %>"></script>
+<% if (version === "@dev") { %>
+<script id="__bs_script__">//<![CDATA[
+document.write("<script async src='//HOST:3002/browser-sync/browser-sync-client.js?v=2.24.4'><\/script>".replace("HOST", location.hostname));
+//]]></script>
+<% } %>
+</body>
+</html>
