@@ -3,17 +3,22 @@
 #
 # (keep alphabetical order inside each section)
 
-#enum Status {
-#    STARTED
-#    QUESTION_TRANSLATED
-#    MATCH_FOUND
-#    ANSWER_GENERATED
-#    ANSWER_TRANSLATED
-#    ERROR
-#}
+enum QuestionResultStatus {
+    STARTED
+    QUESTION_TRANSLATED
+    MATCH_FOUND
+    ANSWER_GENERATED
+    ANSWER_TRANSLATED
+    ERROR
+}
 
-type StateResult @aws_api_key @aws_cognito_user_pools @aws_iam {
-    state: String!
+"""
+Response from the workflow progress
+"""
+type QuestionResult @aws_api_key @aws_cognito_user_pools @aws_iam {
+    id: ID!
+    status: QuestionResultStatus!
+    output: String!
 }
 
 type HealthCheckResult @aws_api_key @aws_cognito_user_pools @aws_iam {
@@ -36,13 +41,18 @@ The mutation root of GraphQL API.
 """
 type Mutation {
     """
-    Changes state
+    Asks a question
     """
-    changeState(id: ID!, text: String!): StateResult! @aws_api_key
+    question(executionId: ID!, text: String!): QuestionResult @aws_api_key @aws_cognito_user_pools @aws_iam
+
+    """
+    Gets partial response
+    """
+    signalState(id: ID!, status: QuestionResultStatus!, output: String!): QuestionResult! @aws_api_key
 }
 
 type Subscription {
-    onStateChange(id: ID!): StateResult @aws_subscribe(mutations: [ "changeState" ])  @aws_api_key @aws_cognito_user_pools @aws_iam
+    onQuestionResult(id: ID!): QuestionResult @aws_subscribe(mutations: [ "signalState" ])  @aws_api_key @aws_cognito_user_pools @aws_iam
 }
 
 

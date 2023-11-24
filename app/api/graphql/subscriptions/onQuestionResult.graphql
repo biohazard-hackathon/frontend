@@ -1,0 +1,7 @@
+subscription OnQuestionResult($executionId: ID!) {
+    onQuestionResult(id: $executionId) {
+        id
+        status
+        output
+    }
+}

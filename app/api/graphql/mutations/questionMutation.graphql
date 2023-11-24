@@ -1,0 +1,7 @@
+mutation Question($executionId: ID!, $text: String!) {
+    question(executionId: $executionId, text: $text) {
+        id
+        status
+        output
+    }
+}
