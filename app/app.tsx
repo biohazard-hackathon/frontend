@@ -33,7 +33,6 @@ const App: FC<Props> = (props) => {
 				domain: HOSTED_UI_DOMAIN,
 				scope: [
 					'openid',
-					'aws.cognito.signin.user.admin',
 					'email',
 				],
 				redirectSignIn: REDIRECT_SIGN_IN,
