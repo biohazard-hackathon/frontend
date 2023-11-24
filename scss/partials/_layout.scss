@@ -1,0 +1,126 @@
+$content-padding: 3rem !default;
+$content-padding-lg: 5rem !default;
+
+body {
+  background-color: $color-white;
+  //background-color: theme-color('body');
+  font-family: "Roboto", sans-serif;
+  margin-top: $header-height;
+  overflow-x: hidden;
+
+  @include media-breakpoint-up(md) {
+    margin-top: $header-height-md;
+  }
+}
+
+.content {
+  padding-bottom: $content-padding;
+  padding-top: $content-padding;
+
+  @include media-breakpoint-up(lg) {
+    padding-bottom: $content-padding-lg;
+    padding-top: $content-padding-lg;
+  }
+}
+
+.content--light {
+  background: $color-white;
+}
+
+.content--dark {
+  background: theme-color('primary');
+  color: $white;
+}
+
+.content--features {
+  padding-bottom: 1rem;
+
+  .content__heading {
+    margin-bottom: #{$content-padding-lg - 1.75rem};
+
+    @include media-breakpoint-up(md) {
+      margin-bottom: #{$content-padding-lg - .75rem};
+    }
+  }
+}
+
+.content__inner {
+  @extend .container;
+}
+
+.col--tiny {
+  padding: 0;
+}
+
+.content__heading {
+  font-size: 2.125rem;
+  font-weight: 100;
+  margin-bottom: .6875rem;
+  text-align: center;
+
+  @include media-breakpoint-up(sm) {
+    font-size: 2.75rem;
+  }
+
+  @include media-breakpoint-up(md) {
+    font-size: 3.25rem;
+  }
+}
+
+.content__heading--small {
+  font-size: 2rem;
+  font-weight: 300;
+  margin-bottom: $content-padding;
+
+  @include media-breakpoint-up(sm) {
+    font-size: 2.25rem;
+  }
+
+  @include media-breakpoint-up(md) {
+    font-size: 2.5rem;
+    margin-bottom: $content-padding-lg;
+  }
+}
+
+.content__heading--get-started {
+  font-size: 2rem;
+  font-weight: 300;
+  margin-bottom: 2.5rem;
+}
+
+.content__claim {
+  font-weight: 300;
+  margin-bottom: 0;
+  margin-top: 1rem;
+
+  strong {
+    margin: 0 .5rem;
+  }
+}
+
+.content__claim--box {
+  margin: auto;
+  max-width: 33.125rem;
+}
+
+.monospace {
+  font-family: "Roboto Mono", monospace;
+}
+
+.fa {
+  span {
+    display: none;
+  }
+}
+
+.lh-1 {
+  line-height: 1;
+}
+
+.lh-2 {
+  line-height: 2;
+}
+
+.get-started {
+  @extend .text-center;
+}

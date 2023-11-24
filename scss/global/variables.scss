@@ -1,0 +1,19 @@
+@import '../../node_modules/bootstrap/scss/functions';
+
+$color-black: #000;
+$color-white: #fff;
+
+
+//$primary: #326b9d;
+
+
+$pixelratio-1x: 96dpi;
+$pixelratio-2x: 192dpi;
+
+$breadcrumb-divider: quote('>');
+
+$header-height: 4rem;
+$header-height-md: 4.8125rem;
+
+@import '../../node_modules/bootstrap/scss/variables';
+@import '../../node_modules/bootstrap/scss/variables-dark';

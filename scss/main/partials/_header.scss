@@ -1,0 +1,19 @@
+.header {
+  background: $color-white;
+  border-bottom: .0625rem solid $gray-200;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  transition: opacity .3s;
+  z-index: 100;
+
+  .container {
+    display: flex;
+    justify-content: center;
+
+    @include media-breakpoint-up(md) {
+      justify-content: flex-start;
+    }
+  }
+}

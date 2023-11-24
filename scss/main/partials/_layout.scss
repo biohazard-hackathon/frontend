@@ -1,0 +1,68 @@
+body {
+  background-color: $color-white;
+  //background-color: theme-color('body');
+  font-family: 'Roboto', sans-serif;
+  margin-top: $header-height;
+  overflow-x: hidden;
+
+  @include media-breakpoint-up(md) {
+    margin-top: $header-height-md;
+  }
+}
+
+.monospace {
+  font-family: "Roboto Mono", monospace;
+}
+
+.fa {
+  span {
+    display: none;
+  }
+}
+
+.lh-1 {
+  line-height: 1;
+}
+
+.lh-2 {
+  line-height: 2;
+}
+
+.cursor--pointer {
+  cursor: pointer;
+}
+
+.get-started {
+  @extend .text-center;
+}
+
+.login {
+  padding: 2rem;
+  text-align: center;
+
+  &__title {
+    margin-bottom: 3.5rem;
+  }
+
+  &__picture {
+    @extend .icon;
+    @extend .icon-sign-in;
+
+    background-color: lighten($secondary, 42%);
+    border: .125rem solid $secondary;
+    border-radius: 50%;
+    box-shadow: 0 0 1.1rem 0 rgba($secondary, .75);
+    color: $secondary;
+    font-size: 8rem;
+    height: 12rem;
+    margin-bottom: 2.5rem;
+    overflow: hidden;
+    text-align: center;
+    width: 12rem;
+
+    &::before {
+      display: block;
+      margin: 2rem auto auto;
+    }
+  }
+}
