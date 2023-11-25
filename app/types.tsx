@@ -40,7 +40,7 @@ export interface IGeneInfo {
 	forwardReverseBalance: string,
 	averageQuality: string,
 	typeOfMutation: string,
-	condingRegionChange: string,
+	codingRegionChange: string,
 	aminoAcidChange: string,
 	exonNumber: string,
 	geneName: string,
