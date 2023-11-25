@@ -29,27 +29,6 @@ type HealthCheckResult @aws_api_key @aws_cognito_user_pools @aws_iam {
     status: String!
 }
 
-type GeneInfo @aws_api_key @aws_cognito_user_pools @aws_iam {
-    chromosome: String,
-    region: String,
-    type: String,
-    reference: String,
-    allele: String,
-    length: String,
-    count: String,
-    coverage: String,
-    frequency: String,
-    forwardReverseBalance: String,
-    averageQuality: String,
-    typeOfMutation: String,
-    condingRegionChange: String,
-    aminoAcidChange: String,
-    exonNumber: String,
-    geneName: String,
-    annotation: Annotation,
-    comment: String
-},
-
 type BiopsyResult @aws_api_key @aws_cognito_user_pools @aws_iam {
     id: ID!
     blockId: ID!,
@@ -83,16 +62,6 @@ type Mutation {
     Gets partial response
     """
     signalProgress(id: ID!, status: IngestionStatus!, output: String!): IngestionProgress! @aws_api_key
-
-    """
-    Add annotation
-    """
-    annotate(id: ID!, annotation: Annotation!): GeneInfo! @aws_cognito_user_pools
-
-    """
-    Add comment
-    """
-    comment(id: ID!, comment: String!): GeneInfo! @aws_cognito_user_pools
     """
     Save annotated biopsy report
     """

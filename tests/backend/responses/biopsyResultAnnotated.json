@@ -18,7 +18,9 @@
       "condingRegionChange": "NM_007120.3:c.868-6787_868-6786dupTA; NM_019075.2:c.856-6787_856-6786dupTA; NM_019076.4:c.856-6787_856-6786dupTA; NM_019077.2:c.856-6787_856-6786dupTA; NM_019078.1:c.868-6787_868-6786dupTA; NM_019093.2:c.868-6787_868-6786dupTA; NM_021027.3:c.856-6787_856-6786dupTA; NM_205862.2:c.61-6787_61-6786dupTA",
       "aminoAcidChange": "",
       "exonNumber": "-/5, -/5, -/5, -/5, -/6, -/5, -/5, -/5",
-      "geneName": "UGT1A1_p"
+      "geneName": "UGT1A1_p",
+      "annotation": "OK",
+      "comment": "very important comment"
     },
     "NM_000546.5:c.672+1G>T": {
       "chromosome": "17",
@@ -36,7 +38,8 @@
       "condingRegionChange": "NM_000546.5:c.672+1G>T",
       "aminoAcidChange": "",
       "exonNumber": "-/11",
-      "geneName": "TP53_e6"
+      "geneName": "TP53_e6",
+      "annotation": "INCONCLUSIVE"
     },
     "NM_015001.3:c.7529C>T": {
       "chromosome": "1",

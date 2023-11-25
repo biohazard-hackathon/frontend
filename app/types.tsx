@@ -19,7 +19,6 @@ export enum Annotation {
 	DANGER = 'DANGER',
 	INCONCLUSIVE = 'INCONCLUSIVE',
 	OK = 'OK',
-	VOID = 'VOID',
 }
 
 export interface IIngestionProgress {
