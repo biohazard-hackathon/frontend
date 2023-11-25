@@ -1,5 +1,0 @@
-mutation Annotate($id: ID!, $annotation: Annotation!) {
-    annotate(id: $id, annotation: $annotation) {
-        id
-    }
-}
