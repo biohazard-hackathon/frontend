@@ -18,6 +18,14 @@ module.exports = {
 				exclude: /node_modules/,
 				use: ['ts-loader'],
 			},
+			{
+				test: /\\.(png|jp(e*)g|svg|gif)$/,
+				use: ['file-loader'],
+			},
+			{
+				test: /\.css$/,
+				use: ['style-loader', 'css-loader',]
+			  }
 		],
 	},
 	optimization: {

@@ -50,7 +50,7 @@ const App: FC<Props> = (props) => {
 		<ReduxProvider store={store}>
 			<I18nextProvider i18n={i18n}>
 				<Navbar />
-				<div className="container mt-5">
+				<div className="container mt-2">
 					<RootRouter {...props} />
 				</div>
 			</I18nextProvider>
