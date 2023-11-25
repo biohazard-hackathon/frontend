@@ -1,0 +1,23 @@
+query GetBiopsyResult($blockId: ID!) {
+    getBiopsyResult(blockId: $blockId) {
+        blockId
+        results {
+            chromosome
+            region
+            type
+            reference
+            allele
+            length
+            count
+            coverage
+            frequency
+            forwardReverseBalance
+            averageQuality
+            typeOfMutation
+            condingRegionChange
+            aminoAcidChange
+            exonNumber
+            geneName
+        }
+    }
+}
