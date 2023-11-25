@@ -21,6 +21,9 @@ const resolverMap = {
 		healthCheck() {
 			return readResponse('healthCheck');
 		},
+		getBiopsyResult() {
+			return readResponse('biopsyResult');
+		},
 	},
 	Subscription: {
 		onQuestionResult() {
@@ -30,6 +33,12 @@ const resolverMap = {
 	Mutation: {
 		question() {
 			return readResponse('questionResult');
+		},
+		annotate() {
+			return readResponse('geneResponse');
+		},
+		comment() {
+			return readResponse('geneResponse');
 		},
 	},
 };
