@@ -37,11 +37,8 @@ const resolverMap = {
 		signalProgress() {
 			return 'START';
 		},
-		annotate() {
-			return readResponse('geneResponse');
-		},
-		comment() {
-			return readResponse('geneResponse');
+		saveAnalysis() {
+			return readResponse('biopsyResultAnnotated');
 		},
 	},
 };

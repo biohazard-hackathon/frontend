@@ -7,9 +7,7 @@ import HealthCheck from './graphql/queries/healthCheck.graphql';
 import StartIngestion from './graphql/mutations/startIngestion.graphql';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import Annotate from './graphql/mutations/annotate.graphql';// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import Comment from './graphql/mutations/comment.graphql';
+import SaveAnalysis from './graphql/mutations/saveAnalysis.graphql';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import OnProgressUpdate from './graphql/subscriptions/OnProgressUpdate.graphql';
@@ -18,7 +16,7 @@ import OnProgressUpdate from './graphql/subscriptions/OnProgressUpdate.graphql';
 import GetBiopsyResult from './graphql/queries/getBiopsyResult.graphql';
 import {ApolloQueryResult} from 'apollo-client';
 import client from './AppsyncClient';
-import {Annotation, IBiopsyResult, IGeneInfo, IIngestionProgress} from '../types';
+import {IBiopsyResult, IGeneInfo, IIngestionProgress} from '../types';
 
 export interface UserInfo {
 	id: number;
@@ -58,28 +56,17 @@ export default class BackendApi extends BaseApi {
 		return result.data.startIngestion;
 	}
 
-	public static async annotateMutation(id: string, annotation: Annotation): Promise<IGeneInfo> {
-		const result: ApolloQueryResult<{ annotate: IGeneInfo }> = await client.mutate({
-			mutation: Annotate,
+	public static async saveAnalysis(id: string, annotatedGeneVariants: {[key: string]: IGeneInfo}): Promise<IBiopsyResult> {
+		const result: ApolloQueryResult<{ saveAnalysis: IBiopsyResult }> = await client.mutate({
+			mutation: SaveAnalysis,
 			fetchPolicy: 'no-cache',
 			variables: {
 				id,
-				annotation,
+				data: annotatedGeneVariants,
 			},
 		});
-		return result.data.annotate;
-	}
 
-	public static async commentMutation(id: string, comment: string): Promise<IGeneInfo> {
-		const result: ApolloQueryResult<{ annotate: IGeneInfo }> = await client.mutate({
-			mutation: Comment,
-			fetchPolicy: 'no-cache',
-			variables: {
-				id,
-				comment,
-			},
-		});
-		return result.data.annotate;
+		return result.data.saveAnalysis;
 	}
 
 	// SUBSCRIPTIONS

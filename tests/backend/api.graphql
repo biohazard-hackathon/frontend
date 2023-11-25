@@ -29,33 +29,11 @@ type HealthCheckResult @aws_api_key @aws_cognito_user_pools @aws_iam {
     status: String!
 }
 
-type GeneInfo @aws_api_key @aws_cognito_user_pools @aws_iam {
-    id: String,
-    chromosome: String,
-    region: String,
-    type: String,
-    reference: String,
-    allele: String,
-    length: String,
-    count: String,
-    coverage: String,
-    frequency: String,
-    forwardReverseBalance: String,
-    averageQuality: String,
-    typeOfMutation: String,
-    condingRegionChange: String,
-    aminoAcidChange: String,
-    exonNumber: String,
-    geneName: String,
-    annotation: Annotation,
-    comment: String
-},
-
 type BiopsyResult @aws_api_key @aws_cognito_user_pools @aws_iam {
-    blockId: String!,
-    results: [GeneInfo]!
+    id: ID!
+    blockId: ID!,
+    results: AWSJSON!,
 }
-
 
 """
 The query root of GraphQL API.
@@ -68,7 +46,7 @@ type Query {
     """
     Returns biopsy result
     """
-    getBiopsyResult(blockId: ID!): BiopsyResult!
+    getBiopsyResult(id: ID!): BiopsyResult!
 }
 
 """
@@ -84,16 +62,10 @@ type Mutation {
     Gets partial response
     """
     signalProgress(id: ID!, status: IngestionStatus!, output: String!): IngestionProgress! @aws_api_key
-
     """
-    Add annotation
+    Save annotated biopsy report
     """
-    annotate(id: ID!, annotation: Annotation!): GeneInfo! @aws_cognito_user_pools
-
-    """
-    Add comment
-    """
-    comment(id: ID!, comment: String!): GeneInfo! @aws_cognito_user_pools
+    saveAnalysis(id: ID!, data: AWSJSON!): BiopsyResult! @aws_cognito_user_pools
 }
 
 type Subscription {
