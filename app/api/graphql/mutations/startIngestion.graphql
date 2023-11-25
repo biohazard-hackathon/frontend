@@ -1,0 +1,6 @@
+mutation StartIngestion($id: ID!) {
+    startIngestion(id: $id) {
+        id
+        status
+    }
+}

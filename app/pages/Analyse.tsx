@@ -1,4 +1,5 @@
 import React, { FC, useState } from "react";
+import BackendApi from '../api/BackendApi';
 import { DataGrid } from '@mui/x-data-grid';
 
 import { UploadFile } from "../components/UploadFile";
@@ -12,18 +13,18 @@ interface Props {
 }
 
 export const Analyse: FC<Props> = () => {
-	const [formData, setFormData] = useState({})
+	const [formData, setFormData] = useState({});
 
 	const handleChange = (event: any) => {
 		console.log('event', event);
-		const { name, value } = event.target;
-		setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+		const {name, value} = event.target;
+		setFormData((prevFormData) => ({...prevFormData, [name]: value}));
 	};
 
 	const handleSubmit = async () => {
 		console.log('formData', formData);
-		// const output = await BackendApi.healthCheck()
-		// console.log(output);
+		const output = await BackendApi.healthCheck();
+		console.log(output);
 	};
 
 	return (
@@ -49,5 +50,5 @@ export const Analyse: FC<Props> = () => {
 				{Object.values(formData).map((item) => <div className="">{item}</div>)}
 			</div>
 		</>
-	)
-}
+	);
+};

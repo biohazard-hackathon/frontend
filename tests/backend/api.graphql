@@ -3,23 +3,37 @@
 #
 # (keep alphabetical order inside each section)
 
-#enum Status {
-#    STARTED
-#    QUESTION_TRANSLATED
-#    MATCH_FOUND
-#    ANSWER_GENERATED
-#    ANSWER_TRANSLATED
-#    ERROR
-#}
+enum IngestionStatus {
+    STARTED
+    COMPLETED
+    ERROR
+}
 
-type StateResult @aws_api_key @aws_cognito_user_pools @aws_iam {
-    state: String!
+enum Annotation {
+    DANGEROUS
+    INCONCLUSIVE
+    OK
+    VOID
+}
+
+"""
+Response from the workflow progress
+"""
+type IngestionProgress @aws_api_key @aws_cognito_user_pools @aws_iam {
+    id: ID!
+    status: IngestionStatus!
+    output: String!
 }
 
 type HealthCheckResult @aws_api_key @aws_cognito_user_pools @aws_iam {
     status: String!
 }
 
+type BiopsyResult @aws_api_key @aws_cognito_user_pools @aws_iam {
+    id: ID!
+    blockId: ID!,
+    results: AWSJSON!,
+}
 
 """
 The query root of GraphQL API.
@@ -28,21 +42,34 @@ type Query {
     """
     Returns a status of the infrastructure
     """
-    healthCheck: HealthCheckResult
+    healthCheck: HealthCheckResult,
+    """
+    Returns biopsy result
+    """
+    getBiopsyResult(id: ID!): BiopsyResult!
 }
 
 """
 The mutation root of GraphQL API.
 """
 type Mutation {
+     """
+    Start ingestion workflow
     """
-    Changes state
+    startIngestion(id: ID!): IngestionProgress @aws_api_key @aws_cognito_user_pools @aws_iam
+
     """
-    changeState(id: ID!, text: String!): StateResult! @aws_api_key
+    Gets partial response
+    """
+    signalProgress(id: ID!, status: IngestionStatus!, output: String!): IngestionProgress! @aws_api_key
+    """
+    Save annotated biopsy report
+    """
+    saveAnalysis(id: ID!, data: AWSJSON!): BiopsyResult! @aws_cognito_user_pools
 }
 
 type Subscription {
-    onStateChange(id: ID!): StateResult @aws_subscribe(mutations: [ "changeState" ])  @aws_api_key @aws_cognito_user_pools @aws_iam
+    onProgressUpdate(id: ID!): IngestionProgress @aws_subscribe(mutations: [ "signalProgress" ])  @aws_api_key @aws_cognito_user_pools @aws_iam
 }
 
 

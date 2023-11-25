@@ -21,15 +21,24 @@ const resolverMap = {
 		healthCheck() {
 			return readResponse('healthCheck');
 		},
+		getBiopsyResult() {
+			return readResponse('biopsyResult');
+		},
 	},
 	Subscription: {
-		onStateChange() {
-			return readResponse('stateChange');
+		onProgressUpdate() {
+			return readResponse('ingestionResult');
 		},
 	},
 	Mutation: {
-		changeState() {
-			return readResponse('stateChange');
+		startIngestion() {
+			return readResponse('ingestionResult');
+		},
+		signalProgress() {
+			return 'START';
+		},
+		saveAnalysis() {
+			return readResponse('biopsyResultAnnotated');
 		},
 	},
 };

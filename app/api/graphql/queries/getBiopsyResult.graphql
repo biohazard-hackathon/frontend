@@ -1,0 +1,6 @@
+query GetBiopsyResult($id: ID!) {
+    getBiopsyResult(id: $id) {
+        blockId
+        results
+    }
+}
