@@ -11,12 +11,3 @@ export const REDIRECT_SIGN_IN = window.location.origin + '/after-login';
 export const REDIRECT_SIGN_OUT = window.location.origin;
 export const USER_POOL_ID = rootElement?.getAttribute('data-user-pool-id') ?? '';
 export const USER_POOL_WEB_CLIENT_ID = rootElement?.getAttribute('data-user-pool-web-client-id') ?? '';
-
-console.log(
-	API_URL,
-	HOSTED_UI_DOMAIN,
-	REDIRECT_SIGN_IN,
-	REDIRECT_SIGN_OUT,
-	USER_POOL_ID,
-	USER_POOL_WEB_CLIENT_ID
-);

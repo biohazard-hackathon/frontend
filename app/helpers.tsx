@@ -22,7 +22,7 @@ export const authenticateUser = () => {
 				localStorage.setItem('token', userData?.signInUserSession.refreshToken.token);
 			} else {
 				console.log('user not signed in');
-				// await Auth.federatedSignIn();
+				await Auth.federatedSignIn();
 			}
 		} catch (error: unknown) {
 			console.error(error);
