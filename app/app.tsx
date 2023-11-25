@@ -36,15 +36,14 @@ const App: FC<Props> = (props) => {
 	});
 
 
-	const [isSignedIn, setSignIn] = useState<boolean>(false);
 
 	const userToken = localStorage.getItem('token');
 
 	useEffect(() => {
-		if (!userToken && !isSignedIn) {
+		if (!userToken) {
 			authenticateUser();
 		}
-	}, [isSignedIn]);
+	}, []);
 
 	return <React.StrictMode>
 		<ReduxProvider store={store}>
