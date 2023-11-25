@@ -1,5 +1,5 @@
-mutation saveAnalysis($id: ID!, $data: AWSJSON!) {
-    saveAnalysis(id: $id,  data: $data) {
+mutation saveAnalysis($id: ID!, $results: AWSJSON!) {
+    saveAnalysis(id: $id,  results: $results) {
         id
     }
 }

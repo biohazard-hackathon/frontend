@@ -62,7 +62,7 @@ export default class BackendApi extends BaseApi {
 			fetchPolicy: 'no-cache',
 			variables: {
 				id,
-				data: annotatedGeneVariants,
+				results: annotatedGeneVariants,
 			},
 		});
 

@@ -65,7 +65,7 @@ type Mutation {
     """
     Save annotated biopsy report
     """
-    saveAnalysis(id: ID!, data: AWSJSON!): BiopsyResult! @aws_cognito_user_pools
+    saveAnalysis(id: ID!, results: AWSJSON!): BiopsyResult! @aws_cognito_user_pools
 }
 
 type Subscription {
