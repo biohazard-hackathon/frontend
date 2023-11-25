@@ -5,6 +5,7 @@ import ErrorPage from '../pages/ErrorPage';
 import HomePage from '../pages/HomePage';
 import { AfterLogin } from '../pages/AfterLogin';
 import { Analyse } from '../pages/Analyse';
+import { Logout } from '../pages/Logout';
 
 interface Props {
 }
@@ -20,6 +21,7 @@ export default class RootRouter extends Component<Props, State> {
 				<Route path="*" element={<ErrorPage {...this.props}/>}/>
 				<Route path="/after-login" element={<AfterLogin {...this.props}/>}/>
 				<Route path="/analyse" element={<Analyse {...this.props}/>}/>
+				<Route path="/logout" element={<Logout {...this.props}/>}/>
 			</Routes>
 		</BrowserRouter>;
 	}

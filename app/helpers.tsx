@@ -12,19 +12,17 @@ export const refreshToken = () => {
 	})();
 };
 
-export const authenticateUser = (user: IUserInfo | undefined, setSignIn: Function, setUser: Function) => {
+export const authenticateUser = () => {
 	(async () => {
 		try {
 			const userInfo = await Auth.currentUserInfo() as IUserInfo;
-			if (user) {
+
+			if (userInfo) {
 				const userData = await Auth.currentAuthenticatedUser();
-				console.log('userData', userData);
-				localStorage.setItem('token', userData?.signInUserSession.refreshToken.token);
-				setSignIn(true);
-				setUser(userInfo);
+				localStorage.setItem('token', userData?.signInUserSession.refreshToken.token)
 			} else {
 				console.log('user not signed in');
-				// await Auth.federatedSignIn();
+				await Auth.federatedSignIn();
 			}
 		} catch (error: unknown) {
 			console.error(error);
