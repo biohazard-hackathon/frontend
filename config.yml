@@ -1,5 +1,5 @@
 PUBLIC_URL: '/'
-API_URL: 'http://localhost:4001'
+API_URL: 'http://localhost:4001/graphql'
 version: '@dev'
 HOSTED_UI_DOMAIN: 'biohazard-staging.auth.us-east-1.amazoncognito.com'
 REDIRECT_SIGN_IN: 'http://localhost:8081/after-login'
