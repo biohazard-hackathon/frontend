@@ -93,6 +93,10 @@ type Mutation {
     Add comment
     """
     comment(id: ID!, comment: String!): GeneInfo! @aws_cognito_user_pools
+    """
+    Save annotated biopsy report
+    """
+    saveAnalysis(id: ID!, data: AWSJSON!): BiopsyResult! @aws_cognito_user_pools
 }
 
 type Subscription {

@@ -7,7 +7,11 @@ import HealthCheck from './graphql/queries/healthCheck.graphql';
 import StartIngestion from './graphql/mutations/startIngestion.graphql';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import Annotate from './graphql/mutations/annotate.graphql';// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+import SaveAnalysis from './graphql/mutations/saveAnalysis.graphql';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import Annotate from './graphql/mutations/annotate.graphql';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import Comment from './graphql/mutations/comment.graphql';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -80,6 +84,19 @@ export default class BackendApi extends BaseApi {
 			},
 		});
 		return result.data.annotate;
+	}
+
+	public static async saveAnalysis(id: string, annotatedGeneVariants: IGeneInfo): Promise<IGeneInfo> {
+		const result: ApolloQueryResult<{saveAnalysis: IGeneInfo}> = await client.mutate({
+			mutation: SaveAnalysis,
+			fetchPolicy: 'no-cache',
+			variables: {
+				id,
+				data: annotatedGeneVariants,
+			},
+		});
+
+		return result.data.saveAnalysis;
 	}
 
 	// SUBSCRIPTIONS
