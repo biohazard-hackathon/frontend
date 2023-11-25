@@ -1,0 +1,7 @@
+subscription OnProgressUpdate($id: ID!) {
+    onProgressUpdate(id: $id) {
+        id
+        status
+        output
+    }
+}
