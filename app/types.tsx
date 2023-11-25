@@ -25,7 +25,7 @@ export enum Annotation {
 export interface IIngestionProgress {
 	id: string,
 	status: IngestionStatus,
-	output: string,
+	output?: string,
 }
 
 export interface IGeneInfo {

@@ -95,18 +95,14 @@ export default class BackendApi extends BaseApi {
 			subscription.subscribe({
 				next: (data) => {
 					const response = data.data.onProgressUpdate;
-					console.log('Signal:', response);
+					console.log('Signal:', response); // here is what the incoming signals are coming to us
 					const result = response.output;
-					// output += "S: " + result + "\n";
-					// outputElement.innerText = output;
 					console.log({subscription: result});
 				},
 				complete: console.log,
 				error: console.error,
 			});
 
-			// output += "S: Listening for responses...\n";
-			// outputElement.innerText = output;
 			const output = await this.startIngestionMutation(id);
 			console.log({mutation: output});
 		});
