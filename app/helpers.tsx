@@ -19,10 +19,10 @@ export const authenticateUser = () => {
 
 			if (userInfo) {
 				const userData = await Auth.currentAuthenticatedUser();
-				localStorage.setItem('token', userData?.signInUserSession.refreshToken.token)
+				localStorage.setItem('token', userData?.signInUserSession.refreshToken.token);
 			} else {
 				console.log('user not signed in');
-				await Auth.federatedSignIn();
+				// await Auth.federatedSignIn();
 			}
 		} catch (error: unknown) {
 			console.error(error);
