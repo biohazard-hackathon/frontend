@@ -3,12 +3,9 @@
 #
 # (keep alphabetical order inside each section)
 
-enum QuestionResultStatus {
+enum IngestionStatus {
     STARTED
-    QUESTION_TRANSLATED
-    MATCH_FOUND
-    ANSWER_GENERATED
-    ANSWER_TRANSLATED
+    COMPLETED
     ERROR
 }
 
@@ -22,9 +19,9 @@ enum Annotation {
 """
 Response from the workflow progress
 """
-type QuestionResult @aws_api_key @aws_cognito_user_pools @aws_iam {
+type IngestionProgress @aws_api_key @aws_cognito_user_pools @aws_iam {
     id: ID!
-    status: QuestionResultStatus!
+    status: IngestionStatus!
     output: String!
 }
 
@@ -78,15 +75,15 @@ type Query {
 The mutation root of GraphQL API.
 """
 type Mutation {
+     """
+    Start ingestion workflow
     """
-    Asks a question
-    """
-    question(executionId: ID!, text: String!): QuestionResult @aws_api_key @aws_cognito_user_pools @aws_iam
+    startIngestion(id: ID!): IngestionProgress @aws_api_key @aws_cognito_user_pools @aws_iam
 
     """
     Gets partial response
     """
-    signalState(id: ID!, status: QuestionResultStatus!, output: String!): QuestionResult! @aws_api_key
+    signalProgress(id: ID!, status: IngestionStatus!, output: String!): IngestionProgress! @aws_api_key
 
     """
     Add annotation
@@ -100,7 +97,7 @@ type Mutation {
 }
 
 type Subscription {
-    onQuestionResult(id: ID!): QuestionResult @aws_subscribe(mutations: [ "signalState" ])  @aws_api_key @aws_cognito_user_pools @aws_iam
+    onProgressUpdate(id: ID!): IngestionProgress @aws_subscribe(mutations: [ "signalProgress" ])  @aws_api_key @aws_cognito_user_pools @aws_iam
 }
 
 

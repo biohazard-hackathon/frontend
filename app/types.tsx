@@ -9,8 +9,10 @@ export interface IUserInfo {
 	username: string
 }
 
-export enum QuestionResultStatus {
-	STARTED = 'STARTED',
+export enum IngestionStatus {
+    STARTED = 'STARTED',
+    COMPLETED = 'COMPLETED',
+    ERROR = 'ERROR',
 }
 
 export enum Annotation {
@@ -20,9 +22,9 @@ export enum Annotation {
 	VOID = 'VOID',
 }
 
-export interface IQuestionResult {
+export interface IIngestionProgress {
 	id: string,
-	status: QuestionResultStatus,
+	status: IngestionStatus,
 	output: string,
 }
 

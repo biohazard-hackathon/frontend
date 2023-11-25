@@ -4,16 +4,21 @@ import BaseApi from './BaseApi';
 import HealthCheck from './graphql/queries/healthCheck.graphql';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import QuestionMutation from './graphql/mutations/questionMutation.graphql';
+import StartIngestion from './graphql/mutations/startIngestion.graphql';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import OnQuestionResult from './graphql/subscriptions/onQuestionResult.graphql';
+import Annotate from './graphql/mutations/annotate.graphql';// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import Comment from './graphql/mutations/comment.graphql';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import OnProgressUpdate from './graphql/subscriptions/OnProgressUpdate.graphql';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import GetBiopsyResult from './graphql/queries/getBiopsyResult.graphql';
 import {ApolloQueryResult} from 'apollo-client';
 import client from './AppsyncClient';
-import {IBiopsyResult, IQuestionResult} from '../types';
+import {Annotation, IBiopsyResult, IGeneInfo, IIngestionProgress} from '../types';
 
 export interface UserInfo {
 	id: number;
@@ -42,31 +47,54 @@ export default class BackendApi extends BaseApi {
 	}
 
 	// MUTATIONS
-	public static async questionMutation(executionId: string, text: string): Promise<IQuestionResult> {
-		const result: ApolloQueryResult<{ question: IQuestionResult }> = await client.mutate({
-			mutation: QuestionMutation,
+	public static async startIngestionMutation(id: string): Promise<IIngestionProgress> {
+		const result: ApolloQueryResult<{ startIngestion: IIngestionProgress }> = await client.mutate({
+			mutation: StartIngestion,
 			fetchPolicy: 'no-cache',
 			variables: {
-				executionId,
-				text,
+				id,
 			},
 		});
-		return result.data.question;
+		return result.data.startIngestion;
+	}
+
+	public static async annotateMutation(id: string, annotation: Annotation): Promise<IGeneInfo> {
+		const result: ApolloQueryResult<{ annotate: IGeneInfo }> = await client.mutate({
+			mutation: Annotate,
+			fetchPolicy: 'no-cache',
+			variables: {
+				id,
+				annotation,
+			},
+		});
+		return result.data.annotate;
+	}
+
+	public static async commentMutation(id: string, comment: string): Promise<IGeneInfo> {
+		const result: ApolloQueryResult<{ annotate: IGeneInfo }> = await client.mutate({
+			mutation: Comment,
+			fetchPolicy: 'no-cache',
+			variables: {
+				id,
+				comment,
+			},
+		});
+		return result.data.annotate;
 	}
 
 	// SUBSCRIPTIONS
-	public static async onQuestionResultSubscription(executionId: string) {
+	public static async onProgressUpdateSubscription(id: string) {
 		client.hydrated().then(async () => {
 			const subscription = client.subscribe({
-				query: OnQuestionResult,
+				query: OnProgressUpdate,
 				variables: {
-					id: executionId,
+					id,
 				},
 			});
 
 			subscription.subscribe({
 				next: (data) => {
-					const response = data.data.onQuestionResult;
+					const response = data.data.onProgressUpdate;
 					console.log('Signal:', response);
 					const result = response.output;
 					// output += "S: " + result + "\n";
@@ -79,7 +107,7 @@ export default class BackendApi extends BaseApi {
 
 			// output += "S: Listening for responses...\n";
 			// outputElement.innerText = output;
-			const output = await this.questionMutation(executionId, 'dummy text');
+			const output = await this.startIngestionMutation(id);
 			console.log({mutation: output});
 		});
 	}

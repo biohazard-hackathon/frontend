@@ -26,13 +26,16 @@ const resolverMap = {
 		},
 	},
 	Subscription: {
-		onQuestionResult() {
-			return readResponse('questionResult');
+		onProgressUpdate() {
+			return readResponse('ingestionResult');
 		},
 	},
 	Mutation: {
-		question() {
-			return readResponse('questionResult');
+		startIngestion() {
+			return readResponse('ingestionResult');
+		},
+		signalProgress() {
+			return 'START';
 		},
 		annotate() {
 			return readResponse('geneResponse');
