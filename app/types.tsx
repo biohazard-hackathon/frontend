@@ -29,7 +29,6 @@ export interface IIngestionProgress {
 }
 
 export interface IGeneInfo {
-	id: string,
 	chromosome: string,
 	region: string,
 	type: string,
@@ -52,5 +51,8 @@ export interface IGeneInfo {
 
 export interface IBiopsyResult {
 	blockId: string,
-	results: IGeneInfo[],
+	id: string,
+	results: {
+		[key: string]: IGeneInfo
+	},
 }

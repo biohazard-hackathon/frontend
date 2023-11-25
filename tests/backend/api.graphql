@@ -30,7 +30,6 @@ type HealthCheckResult @aws_api_key @aws_cognito_user_pools @aws_iam {
 }
 
 type GeneInfo @aws_api_key @aws_cognito_user_pools @aws_iam {
-    id: String,
     chromosome: String,
     region: String,
     type: String,
@@ -52,10 +51,10 @@ type GeneInfo @aws_api_key @aws_cognito_user_pools @aws_iam {
 },
 
 type BiopsyResult @aws_api_key @aws_cognito_user_pools @aws_iam {
-    blockId: String!,
-    results: [GeneInfo]!
+    id: ID!
+    blockId: ID!,
+    results: AWSJSON!,
 }
-
 
 """
 The query root of GraphQL API.
@@ -68,7 +67,7 @@ type Query {
     """
     Returns biopsy result
     """
-    getBiopsyResult(blockId: ID!): BiopsyResult!
+    getBiopsyResult(id: ID!): BiopsyResult!
 }
 
 """
