@@ -1,12 +1,7 @@
 import React, { FC, useState } from "react";
 import BackendApi from '../api/BackendApi';
-import { DataGrid } from '@mui/x-data-grid';
 
 import { UploadFile } from "../components/UploadFile";
-import { columns, rows } from "../mocks";
-import BackendApi from "../api/BackendApi";
-import { DataTable } from "../components/DataTable";
-import { UploadStepper } from "../components/UploadStepper";
 
 interface Props {
 
