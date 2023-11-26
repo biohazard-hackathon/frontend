@@ -122,7 +122,7 @@ export const UploadStepper: FC<Props> = ({file, fileType, setIsCompleted}) => {
 			<div className="line" />
 			<div className="step" data-target="#step-sheet-parsed">
 				<button className="step-trigger">
-					<span className="bs-stepper-circle"><Icon name="file-code" /></span>
+					<span className="bs-stepper-circle"><Icon name="tachometer-alt" /></span>
 					<span className="bs-stepper-label">Sheet parsed</span>
 				</button>
 			</div>

@@ -12,7 +12,7 @@ interface Props {
 export const Analyse: FC<Props> = () => {
 	const [file, setFile] = useState<File>();
 	const [fileType, setFileType] = useState<string>();
-	const [isCompleted, setIsCompleted] = useState(true);
+	const [isCompleted, setIsCompleted] = useState(false);
 
 	const params = useParams();
 	console.log('userId', params.id);

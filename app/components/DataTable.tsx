@@ -21,8 +21,6 @@ export const DataTable: FC<Props> = () => {
 	async function handleUpload() {
 		try {
 			if (!rows?.length) {
-
-
 				const bio = await BackendApi.getBiopsyResult(uuid);
 
 				if (bio) {
