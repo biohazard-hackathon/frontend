@@ -122,7 +122,7 @@ export const UploadStepper: FC<Props> = ({file, fileType, setIsCompleted}) => {
 			<div className="line" />
 			<div className="step" data-target="#step-sheet-parsed">
 				<button className="step-trigger">
-					<span className="bs-stepper-circle"><Icon name="tachometer-alt" /></span>
+					<span className="bs-stepper-circle"><Icon name="spinner" /></span>
 					<span className="bs-stepper-label">Sheet parsed</span>
 				</button>
 			</div>
@@ -188,13 +188,13 @@ export const UploadStepper: FC<Props> = ({file, fileType, setIsCompleted}) => {
 					</div>
 					<div>
 						<h2 className="text-muted">Sheet is loaded ..</h2>
-						{activeSignal?.output && <p>File size: {activeSignal?.output ? JSON.parse(activeSignal.output).size : ''}</p>}
+						{/* {activeSignal?.output && <p>File size: {activeSignal?.output ? JSON.parse(activeSignal.output).size : ''}</p>} */}
 					</div>
 				</div>
 
 				<div id="step-sheet-validated" className="content container p-3 text-center">
 					<div className="p-2 d-flex align-items-center">
-						<img src="/images/encrypt-icon.png" className="d-block w-25 h-25 mx-auto mb-4"/>
+						<img src="/images/encrypt_icon.png" className="d-block w-25 h-25 mx-auto mb-4"/>
 						<span className="display-3">&</span>
 						<img src="/images/checklist.png" className="d-block w-25 mx-auto mb-4"/>
 					</div>
