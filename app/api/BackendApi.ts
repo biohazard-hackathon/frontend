@@ -14,9 +14,12 @@ import OnProgressUpdate from './graphql/subscriptions/OnProgressUpdate.graphql';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import GetBiopsyResult from './graphql/queries/getBiopsyResult.graphql';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import GetRelevantReports from './graphql/queries/getRelevantReports.graphql';
 import {ApolloQueryResult} from 'apollo-client';
 import client from './AppsyncClient';
-import {IBiopsyResult, IGeneInfo, IIngestionProgress} from '../types';
+import {IBiopsyResult, IGeneInfo, IIngestionProgress, IRelevantReport} from '../types';
 
 export interface UserInfo {
 	id: number;
@@ -42,6 +45,17 @@ export default class BackendApi extends BaseApi {
 			},
 		});
 		return status.data.getBiopsyResult;
+	}
+
+	public static async getRelevantReports(codingRegionChange: [string]): Promise<[IRelevantReport]> {
+		const status: ApolloQueryResult<{ getRelevantReports: [IRelevantReport] }> = await client.query({
+			query: GetRelevantReports,
+			fetchPolicy: 'network-only',
+			variables: {
+				codingRegionChange,
+			},
+		});
+		return status.data.getRelevantReports;
 	}
 
 	// MUTATIONS

@@ -35,6 +35,11 @@ type BiopsyResult @aws_api_key @aws_cognito_user_pools @aws_iam {
     results: AWSJSON!,
 }
 
+type RelevantReport {
+    codingRegionChange: String!
+    id: [ID]!
+}
+
 """
 The query root of GraphQL API.
 """
@@ -47,6 +52,10 @@ type Query {
     Returns biopsy result
     """
     getBiopsyResult(id: ID!): BiopsyResult!
+    """
+    Returns relevant reports based on codingRegionChanges
+    """
+    getRelevantReports(codingRegionChanges: [String]!): [RelevantReport]!
 }
 
 """

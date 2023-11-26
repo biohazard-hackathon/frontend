@@ -58,3 +58,8 @@ export interface IBiopsyResult {
 		[key: string]: IGeneInfo
 	},
 }
+
+export interface IRelevantReport {
+	codingRegionChange: string,
+	id: [string],
+}

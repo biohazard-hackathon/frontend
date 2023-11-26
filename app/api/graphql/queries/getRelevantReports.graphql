@@ -1,0 +1,6 @@
+query GetRelevantReports($codingRegionChanges: [String]!) {
+    getRelevantReports(codingRegionChanges: $codingRegionChanges) {
+        codingRegionChange
+        id
+    }
+}
