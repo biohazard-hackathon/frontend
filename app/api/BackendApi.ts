@@ -23,7 +23,6 @@ import {IBiopsyResult, IGeneInfo, IIngestionProgress, IRelevantReport} from '../
 import {AWS_REGION, IDENTITY_POOL_ID, S3_BUCKET} from '../constants/env';
 import {PutObjectCommand, S3Client} from '@aws-sdk/client-s3';
 import {getSignedUrl} from '@aws-sdk/s3-request-presigner';
-// import s3Client from './S3Client';
 import {Auth} from 'aws-amplify';
 import {fromCognitoIdentityPool} from '@aws-sdk/credential-providers';
 
