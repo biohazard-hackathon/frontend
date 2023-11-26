@@ -16,11 +16,11 @@ export const DataTable: FC<Props> = () => {
 	const [relevantData, setRelevantData] = useState<IRelevantReport[]>();
 	const params = useParams();
 
-	const uuid = params.id || 'b8149b1e-8684-47c7-b7f3-6421e425afa3';
+	const uuid = params.id;
 
 	async function handleUpload() {
 		try {
-			if (!rows?.length) {
+			if (!rows?.length && uuid) {
 				const bio = await BackendApi.getBiopsyResult(uuid);
 
 				if (bio) {
