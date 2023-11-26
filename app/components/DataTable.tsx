@@ -14,12 +14,20 @@ export const DataTable: FC<Props> = () => {
 	const [rows, setRows] = useState<IGeneInfo[]>([]);
 	const [formData, setFormData] = useState({});
 	const [relevantData, setRelevantData] = useState<IRelevantReport[]>();
+	console.log('HERHEHER');
+	const params = useParams();
+
+	console.log(params);
+	const uuid = params.id || 'b8149b1e-8684-47c7-b7f3-6421e425afa3';
+	console.log(uuid);
+
 
 	async function handleUpload() {
 		try {
 			if (!rows?.length) {
-				const bio = await BackendApi.getBiopsyResult('b8149b1e-8684-47c7-b7f3-6421e425afa3');
 
+
+				const bio = await BackendApi.getBiopsyResult(uuid);
 
 				if (bio) {
 					const bb: { [key: string]: IGeneInfo } = JSON.parse(bio.results! as unknown as string);
@@ -33,7 +41,11 @@ export const DataTable: FC<Props> = () => {
 					setRows(Object.values(bb).map((item, index) => {
 
 						if (mutationsWithReports.includes(item.codingRegionChange)) {
-							return ({annotation: undefined, id: index + 1, ...item, relevantReports: relevantReportsData.filter(report => report.codingRegionChange === item.codingRegionChange)});
+							return ({
+								annotation: undefined,
+								id: index + 1, ...item,
+								relevantReports: relevantReportsData.filter(report => report.codingRegionChange === item.codingRegionChange),
+							});
 						}
 						return ({annotation: undefined, id: index + 1, ...item, relevantReports: []});
 					}));
