@@ -1,6 +1,5 @@
 import React, { FC, useState } from "react";
 
-import BackendApi from '../api/BackendApi';
 import { DataTable } from "../components/DataTable";
 import { UploadFile } from "../components/UploadFile";
 import { UploadStepper } from "../components/UploadStepper";
@@ -16,6 +15,8 @@ export const Analyse: FC<Props> = () => {
 	const [isCompleted, setIsCompleted] = useState(false);
 
 	console.log('isCompleted', isCompleted);
+	console.log('file', file);
+
 	const handleChange = (event: any) => {
 		console.log('event', event);
 		const { name, value } = event.target;
@@ -24,39 +25,33 @@ export const Analyse: FC<Props> = () => {
 
 	const handleSubmit = async () => {
 		console.log('formData', formData);
-		const output = await BackendApi.healthCheck();
-		console.log(output);
 	};
 
 	return (
 		<>
-			{!isCompleted && (
-				<>
-					<h1>Upload your file</h1>
+			<h1>{!isCompleted ? 'Upload your file' : 'Your parsed data'}</h1>
 
-					{file ?
-						<UploadStepper file={file} fileType={fileType} setIsCompleted={setIsCompleted} />
-						:
-						<div className="d-flex">
-							<UploadFile setFile={setFile} selectedFile={file} setFileType={setFileType} />
-							<UploadFile isXls={false} setFile={setFile} selectedFile={file} setFileType={setFileType} />
-						</div>
-					}
-				</>
-			)}
-
-			{/* <form action="submitForm">
-				<div className="form-floating">
-					<textarea className="form-control" name="input" id="floatingTextarea2" style={{ height: '100px' }} onChange={handleChange}></textarea>
-					<label htmlFor="floatingTextarea2">Input text</label>
+			{file ?
+				<UploadStepper file={file} fileType={fileType} setIsCompleted={setIsCompleted} />
+				:
+				<div className="d-flex">
+					<UploadFile setFile={setFile} selectedFile={file} setFileType={setFileType} />
+					<UploadFile isXls={false} setFile={setFile} selectedFile={file} setFileType={setFileType} />
 				</div>
-				<div className="d-flex justify-content-md-end">
-					<button type="button" className="btn btn-primary mt-5" onClick={handleSubmit}>Analyse</button>
-				</div>
-			</form> */}
+			}
 
-			{isCompleted &&
+			{isCompleted && <>
 				<DataTable />
+				<form action="submitForm mt-3">
+					<div className="form-floating">
+						<textarea className="form-control" name="input" id="floatingTextarea2" style={{ height: '100px' }} onChange={handleChange}></textarea>
+						<label htmlFor="floatingTextarea2">Conclusion</label>
+					</div>
+					<div className="d-flex justify-content-md-end">
+						<button type="button" className="btn btn-primary mt-5" onClick={handleSubmit}>Analyse</button>
+					</div>
+				</form>
+			</>
 			}
 		</>
 	);
