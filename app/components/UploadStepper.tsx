@@ -37,7 +37,7 @@ export const UploadStepper: FC<Props> = ({file, fileType, setIsCompleted}) => {
 
 			const options = { headers: { 'Content-Type': "vnd.ms-excel" } };
 			await axios.put(presignedS3Url, file, options);
-			// await BackendApi.onProgressUpdateSubscription(uuid, setSignal);
+			await BackendApi.onProgressUpdateSubscription(uuid, setSignal);
 		} catch (error) {
 			console.log(error);
 		}
