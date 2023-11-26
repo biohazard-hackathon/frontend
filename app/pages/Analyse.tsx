@@ -31,26 +31,29 @@ export const Analyse: FC<Props> = () => {
 		<>
 			<h1>{!isCompleted ? 'Upload your file' : 'Your parsed data'}</h1>
 
-			{file ?
-				<UploadStepper file={file} fileType={fileType} setIsCompleted={setIsCompleted} />
-				:
-				<div className="d-flex">
-					<UploadFile setFile={setFile} selectedFile={file} setFileType={setFileType} />
-					<UploadFile isXls={false} setFile={setFile} selectedFile={file} setFileType={setFileType} />
-				</div>
-			}
-
-			{isCompleted && <>
+			{!isCompleted ? <>
+				{file ?
+					<UploadStepper file={file} fileType={fileType} setIsCompleted={setIsCompleted} />
+					:
+					<div className="d-flex">
+						<UploadFile setFile={setFile} selectedFile={file} setFileType={setFileType} />
+						<UploadFile isXls={false} setFile={setFile} selectedFile={file} setFileType={setFileType} />
+					</div>
+				}
+			</> : <>
 				<DataTable />
-				<form action="submitForm mt-3">
-					<div className="form-floating">
-						<textarea className="form-control" name="input" id="floatingTextarea2" style={{ height: '100px' }} onChange={handleChange}></textarea>
-						<label htmlFor="floatingTextarea2">Conclusion</label>
-					</div>
-					<div className="d-flex justify-content-md-end">
-						<button type="button" className="btn btn-primary mt-5" onClick={handleSubmit}>Analyse</button>
-					</div>
-				</form>
+				<div className="mt-3">
+					<h2>Conclusion</h2>
+					<form action="submitForm mt-3">
+						<div className="form-floating">
+							<textarea className="form-control" name="input" id="floatingTextarea2" style={{ height: '100px' }} onChange={handleChange}></textarea>
+							<label htmlFor="floatingTextarea2">Conclusion</label>
+						</div>
+						<div className="d-flex justify-content-md-end">
+							<button type="button" className="btn btn-primary mt-5" onClick={handleSubmit}>Analyse</button>
+						</div>
+					</form>
+				</div>
 			</>
 			}
 		</>
