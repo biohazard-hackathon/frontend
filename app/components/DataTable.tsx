@@ -23,8 +23,12 @@ export const DataTable: FC<Props> = () => {
 			if (!rows?.length) {
 				const bio = await BackendApi.getBiopsyResult('b8149b1e-8684-47c7-b7f3-6421e425afa3');
 
+
 				if (bio) {
-					setRows(Object.values(bio.results).map((item, index) => ({ annotation: undefined, id: index + 1, ...item })))
+					const bb: {[key: string]: IGeneInfo} = JSON.parse(bio.results! as unknown as string);
+					console.log('bb', bb);
+
+					setRows(Object.values(bb).map((item, index) => ({ annotation: undefined, id: index + 1, ...item })))
 					setBiopsy(bio);
 					getRelevantData(bio);
 				}

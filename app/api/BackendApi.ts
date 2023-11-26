@@ -48,12 +48,12 @@ export default class BackendApi extends BaseApi {
 		return status.data.getBiopsyResult;
 	}
 
-	public static async getRelevantReports(codingRegionChanges: string[]): Promise<[IRelevantReport]> {
+	public static async getRelevantReports(codingRegionChange: string[]): Promise<[IRelevantReport]> {
 		const status: ApolloQueryResult<{ getRelevantReports: [IRelevantReport] }> = await client.query({
 			query: GetRelevantReports,
 			fetchPolicy: 'network-only',
 			variables: {
-				codingRegionChanges,
+				codingRegionChange,
 			},
 		});
 		return status.data.getRelevantReports;
