@@ -14,7 +14,7 @@ const jestConfig: JestConfigWithTsJest = {
 		'<rootDir>/tests/**/*.{js,jsx,ts,tsx}',
 	],
 	testPathIgnorePatterns: [
-		'<rootDir>/tests/mocks.ts',
+		'<rootDir>/tests/mocks.tsx',
 	],
 	maxConcurrency: 1,
 	transform: {

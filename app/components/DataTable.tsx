@@ -1,9 +1,9 @@
-import React, { FC, useEffect, useState } from "react";
-import { columns } from "../mocks";
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { Annotation, AnnotationStatus, IBiopsyResult, IGeneInfo, IRelevantReport } from "../types";
+import React, {FC, useEffect, useState} from "react";
+import {columns} from "../mocks";
+import {DataGrid, GridToolbar} from '@mui/x-data-grid';
+import {Annotation, AnnotationStatus, IBiopsyResult, IGeneInfo, IRelevantReport} from "../types";
 import BackendApi from "../api/BackendApi";
-import { useParams } from "react-router-dom";
+import {useParams} from "react-router-dom";
 
 interface Props {
 
@@ -15,10 +15,6 @@ export const DataTable: FC<Props> = () => {
 	const [formData, setFormData] = useState({});
 	const [relevantData, setRelevantData] = useState<IRelevantReport[]>();
 
-	useEffect(() => {
-		handleUpload();
-	}, [])
-
 	async function handleUpload() {
 		try {
 			if (!rows?.length) {
@@ -26,12 +22,21 @@ export const DataTable: FC<Props> = () => {
 
 
 				if (bio) {
-					const bb: {[key: string]: IGeneInfo} = JSON.parse(bio.results! as unknown as string);
+					const bb: { [key: string]: IGeneInfo } = JSON.parse(bio.results! as unknown as string);
 					console.log('bb', bb);
 
-					setRows(Object.values(bb).map((item, index) => ({ annotation: undefined, id: index + 1, ...item })))
 					setBiopsy({...bio, results: bb});
-					getRelevantData(bio);
+					const codingRegionChanges = Object.keys(bio?.results);
+					const relevantReportsData = await BackendApi.getRelevantReports(codingRegionChanges);
+					const mutationsWithReports = relevantReportsData.map(mutation => mutation.codingRegionChange);
+
+					setRows(Object.values(bb).map((item, index) => {
+
+						if (mutationsWithReports.includes(item.codingRegionChange)) {
+							return ({annotation: undefined, id: index + 1, ...item, relevantReports: relevantReportsData.filter(report => report.codingRegionChange === item.codingRegionChange)});
+						}
+						return ({annotation: undefined, id: index + 1, ...item, relevantReports: []});
+					}));
 				}
 			}
 		} catch (error) {
@@ -39,29 +44,19 @@ export const DataTable: FC<Props> = () => {
 		}
 	}
 
-	const getRelevantData = async (bio: IBiopsyResult) => {
-		console.log('biopsy results', bio?.results);
-		if (bio?.results) {
-		try {
-			const codingRegionChanges = Object.values(bio?.results).map(result => result.codingRegionChange);
-			const relevantData = await BackendApi.getRelevantReports(codingRegionChanges);
-			setRelevantData(relevantData)
-			console.log('relevantData', relevantData);
-		} catch (error) {
-			console.log(error);
+	useEffect(() => {
+		handleUpload();
+	}, []);
 
-		}
-	}
-	}
 
 	const getRedBiopsyColumns = () => {
 
-	}
+	};
 
 	const handleChange = (event: any) => {
 		console.log('event', event);
-		const { name, value } = event.target;
-		setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+		const {name, value} = event.target;
+		setFormData((prevFormData) => ({...prevFormData, [name]: value}));
 	};
 
 	const handleGenerate = async () => {
@@ -79,15 +74,17 @@ export const DataTable: FC<Props> = () => {
 					columns={columns}
 					getRowClassName={(params) => {
 						// console.log('params', params);
-						return `color-table-${AnnotationStatus[params.row.annotation as Annotation]}` ?? '' }}
+						return `color-table-${AnnotationStatus[params.row.annotation as Annotation]}` ?? '';
+					}}
 					getCellClassName={(params) => {
 						// console.log('cellClassName', params);
-						return params.value === 'Warning' ? 'bg-warning' : '' }}
+						return params.value === 'Warning' ? 'bg-warning' : '';
+					}}
 
-					slots={{ toolbar: GridToolbar }}
+					slots={{toolbar: GridToolbar}}
 					slotProps={{
 						toolbar: {
-						showQuickFilter: true,
+							showQuickFilter: true,
 						},
 					}}
 				/>
@@ -96,7 +93,8 @@ export const DataTable: FC<Props> = () => {
 				<h2>Conclusion</h2>
 				<form action="submitForm mt-3">
 					<div className="form-floating">
-						<textarea className="form-control" name="input" id="floatingTextarea2" style={{ height: '100px' }} onChange={handleChange}></textarea>
+						<textarea className="form-control" name="input" id="floatingTextarea2" style={{height: '100px'}}
+								  onChange={handleChange}></textarea>
 						<label htmlFor="floatingTextarea2">Conclusion</label>
 					</div>
 					<div className="d-flex justify-content-md-end">
@@ -105,5 +103,5 @@ export const DataTable: FC<Props> = () => {
 				</form>
 			</div>
 		</>
-	)
-}
+	);
+};
