@@ -14,13 +14,9 @@ export const DataTable: FC<Props> = () => {
 	const [rows, setRows] = useState<IGeneInfo[]>([]);
 	const [formData, setFormData] = useState({});
 	const [relevantData, setRelevantData] = useState<IRelevantReport[]>();
-	console.log('HERHEHER');
 	const params = useParams();
 
-	console.log(params);
 	const uuid = params.id || 'b8149b1e-8684-47c7-b7f3-6421e425afa3';
-	console.log(uuid);
-
 
 	async function handleUpload() {
 		try {
