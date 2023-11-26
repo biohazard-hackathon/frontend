@@ -24,6 +24,9 @@ const resolverMap = {
 		getBiopsyResult() {
 			return readResponse('biopsyResult');
 		},
+		getRelevantReport() {
+			return readResponse('relevantReport');
+		},
 	},
 	Subscription: {
 		onProgressUpdate() {
