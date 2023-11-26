@@ -1,11 +1,11 @@
-import React, { FC, useEffect, useState } from "react"
-import Stepper from 'bs-stepper'
+import React, {FC, useEffect, useState} from "react";
+import Stepper from 'bs-stepper';
 import "bs-stepper/dist/css/bs-stepper.min.css";
 import Icon from "./Icon";
-import { createUUID } from "../helpers";
+import {createUUID} from "../helpers";
 import BackendApi from "../api/BackendApi";
-import { UploadFile } from "./UploadFile";
-import { IIngestionProgress, IngestionStatus } from "../types";
+import {IIngestionProgress, IngestionStatus} from "../types";
+import axios from 'axios';
 
 interface Props {
 	file: File | undefined;
@@ -14,13 +14,13 @@ interface Props {
 }
 
 const IngestionStatusToSteps = {
-    STARTED: 1,
-    COMPLETED: 5,
-    ERROR: 0,
-    SHEET_LOADED: 2,
-    SHEET_PARSED: 4,
-    SHEET_VALIDATED: 3
-}
+	STARTED: 1,
+	COMPLETED: 5,
+	ERROR: 0,
+	SHEET_LOADED: 2,
+	SHEET_PARSED: 4,
+	SHEET_VALIDATED: 3,
+};
 
 export const UploadStepper: FC<Props> = ({file, fileType, setIsCompleted}) => {
 
@@ -28,17 +28,34 @@ export const UploadStepper: FC<Props> = ({file, fileType, setIsCompleted}) => {
 	const [activeStep, setActiveStep] = useState(IngestionStatusToSteps.STARTED);
 	const [activeSignal, setSignal] = useState<IIngestionProgress>();
 
+	async function handleUpload() {
+		const uuid = createUUID();
+		console.log(`Starting subscription for ${uuid}`);
+
+		try {
+			const presignedS3Url = await BackendApi.getPresignedLinkForUpload(uuid);
+
+			const options = { headers: { 'Content-Type': "vnd.ms-excel" } };
+			await axios.put(presignedS3Url, file, options);
+			await BackendApi.onProgressUpdateSubscription(uuid, setSignal);
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
 	useEffect(() => {
-		const element = document.querySelector('#stepper1')
+		const element = document.querySelector('#stepper1');
 		if (element) {
 			const stepp = new Stepper(element, {
 				linear: true,
-				animation: true
-			})
+				animation: true,
+			});
 
-			setStepper(stepp)
+			setStepper(stepp);
 		}
-		handleUpload();
+		if (file) {
+			(async () => await handleUpload())();
+		}
 	}, []);
 
 	useEffect(() => {
@@ -49,28 +66,17 @@ export const UploadStepper: FC<Props> = ({file, fileType, setIsCompleted}) => {
 
 				setTimeout(() => {
 					setIsCompleted(true);
-				  }, 3000);
+				}, 3000);
 			}
 			setActiveStep(signal);
 			console.log('signal', signal);
 			stepper?.to(signal);
 		}
-	}, [activeSignal])
+	}, [activeSignal]);
 
 	const onSubmit = () => {
 
-	}
-
-	async function handleUpload () {
-		const uuid = createUUID();
-		console.log(`Starting subscription for ${uuid}`);
-
-		try {
-			await BackendApi.onProgressUpdateSubscription(uuid, setSignal);
-		} catch (error) {
-			console.log(error);
-		}
-	}
+	};
 
 	// const handleNext = () => {
 	// 	stepper?.next()
@@ -83,18 +89,18 @@ export const UploadStepper: FC<Props> = ({file, fileType, setIsCompleted}) => {
 		<div className="bs-stepper-header">
 			<div className="step" data-target="#upload-step-1">
 				<button className="step-trigger">
-					<span className="bs-stepper-circle"><Icon name="cloud-arrow-up" /></span>
+					<span className="bs-stepper-circle"><Icon name="cloud-arrow-up"/></span>
 					<span className="bs-stepper-label">Uploading</span>
 				</button>
 			</div>
-			<div className="line" />
+			<div className="line"/>
 			<div className="step" data-target="#upload-step-2">
 				<button className="step-trigger">
 					<span className="bs-stepper-circle">2</span>
 					<span className="bs-stepper-label">Something</span>
 				</button>
 			</div>
-			<div className="line" />
+			<div className="line"/>
 			<div className="step" data-target="#upload-step-3">
 				<button className="step-trigger">
 					<span className="bs-stepper-circle">3</span>
@@ -102,7 +108,7 @@ export const UploadStepper: FC<Props> = ({file, fileType, setIsCompleted}) => {
 				</button>
 			</div>
 
-			<div className="line" />
+			<div className="line"/>
 			<div className="step" data-target="#upload-step-4">
 				<button className="step-trigger">
 					<span className="bs-stepper-circle">4</span>
@@ -110,10 +116,10 @@ export const UploadStepper: FC<Props> = ({file, fileType, setIsCompleted}) => {
 				</button>
 			</div>
 
-			<div className="line" />
+			<div className="line"/>
 			<div className="step" data-target="#step-completed">
 				<button className="step-trigger">
-					<span className="bs-stepper-circle"><Icon name="check" /></span>
+					<span className="bs-stepper-circle"><Icon name="check"/></span>
 					<span className="bs-stepper-label">Completed</span>
 				</button>
 			</div>
@@ -123,7 +129,9 @@ export const UploadStepper: FC<Props> = ({file, fileType, setIsCompleted}) => {
 				<div id="upload-step-1" className="content container p-5 text-center">
 					<div className="form-group">
 						{file && <div className="p-2">
-							<img src={fileType === 'excel' ? "/images/upload_xls.png" : "/images/fasta_file_extension.png"} alt="" className="d-block w-25 mx-auto mb-4" />
+							<img
+								src={fileType === 'excel' ? "/images/upload_xls.png" : "/images/fasta_file_extension.png"}
+								alt="" className="d-block w-25 mx-auto mb-4"/>
 							<div>
 								<h2>File Details:</h2>
 								<p>
@@ -171,5 +179,5 @@ export const UploadStepper: FC<Props> = ({file, fileType, setIsCompleted}) => {
 				</div>
 			</form>
 		</div>
-	</div>
-}
+	</div>;
+};

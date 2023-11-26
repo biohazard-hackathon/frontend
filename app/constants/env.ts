@@ -11,3 +11,5 @@ export const REDIRECT_SIGN_IN = window.location.origin + '/after-login';
 export const REDIRECT_SIGN_OUT = window.location.origin;
 export const USER_POOL_ID = rootElement?.getAttribute('data-user-pool-id') ?? '';
 export const USER_POOL_WEB_CLIENT_ID = rootElement?.getAttribute('data-user-pool-web-client-id') ?? '';
+export const IDENTITY_POOL_ID = rootElement?.getAttribute('data-identity-pool-id') ?? '';
+export const S3_BUCKET = rootElement?.getAttribute('data-s3-bucket') ?? '';
