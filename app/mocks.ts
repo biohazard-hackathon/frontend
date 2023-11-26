@@ -1,31 +1,65 @@
 import { GridColDef, GridRowsProp } from '@mui/x-data-grid';
 import { AnnotationStatus } from './types';
+import { Link } from 'react-router-dom';
+
+const cols = [
+	'annotation',
+	'id',
+	'allele',
+	'aminoAcidChange',
+	'averageQuality',
+	'chromosome',
+	'codingRegionChange',
+	'count',
+	'coverage',
+	'exonNumber',
+	'forwardReverseBalance',
+	'frequency',
+	'geneName',
+	'length',
+	'reference',
+	'region',
+	'type',
+	'typeOfMutation',
+	'comment'
+];
 
 export const columns: GridColDef[] = [
 	{ 	field: 'annotation',
 		headerName: 'Annotation',
-		width: 150,
+
 		editable: true,
 		type: 'singleSelect',
 		valueOptions: Object.keys(AnnotationStatus),
 	},
-	{ field: 'id', headerName: 'ID', width: 150 },
-	{ field: 'allele', headerName: 'Allele', width: 150 },
-	{ field: 'aminoAcidChange', headerName: 'AminoAcidChange', width: 150 },
-	{ field: 'averageQuality', headerName: 'AverageQuality', width: 150 },
-	{ field: 'chromosome', headerName: 'Chromosome', width: 150 },
-	{ field: 'codingRegionChange', headerName: 'CodingRegionChange', width: 150 },
-	{ field: 'count', headerName: 'Count', width: 150 },
-	{ field: 'coverage', headerName: 'Coverage', width: 150 },
-	{ field: 'exonNumber', headerName: 'ExonNumber', width: 150 },
-	{ field: 'forwardReverseBalance', headerName: 'ForwardReverseBalance', width: 150 },
-	{ field: 'frequency', headerName: 'Frequency', width: 150 },
-	{ field: 'geneName', headerName: 'GeneName', width: 150 },
-	{ field: 'length', headerName: 'Length', width: 150 },
-	{ field: 'reference', headerName: 'Reference', width: 150 },
-	{ field: 'region', headerName: 'Region', width: 150 },
-	{ field: 'type', headerName: 'Type', width: 150 },
-	{ field: 'typeOfMutation', headerName: 'TypeOfMutation', width: 150 },
+	{ field: 'id', headerName: 'ID'},
+	{ field: 'allele', headerName: 'Allele'},
+	{ field: 'aminoAcidChange', headerName: 'AminoAcidChange'},
+	{ field: 'averageQuality', headerName: 'AverageQuality'},
+	{ field: 'chromosome', headerName: 'Chromosome'},
+	{
+		field: 'codingRegionChange',
+		headerName: 'CodingRegionChange',
+		width: 150,
+		renderCell: (params) => {return params.value},
+	 },
+	{ field: 'count', headerName: 'Count'},
+	{ field: 'coverage', headerName: 'Coverage'},
+	{ field: 'exonNumber', headerName: 'ExonNumber'},
+	{ field: 'forwardReverseBalance', headerName: 'ForwardReverseBalance'},
+	{ field: 'frequency', headerName: 'Frequency'},
+	{ field: 'geneName', headerName: 'GeneName'},
+	{ field: 'length', headerName: 'Length'},
+	{ field: 'reference', headerName: 'Reference'},
+	{ field: 'region', headerName: 'Region'},
+	{ field: 'type', headerName: 'Type'},
+	{ field: 'typeOfMutation', headerName: 'TypeOfMutation'},
+	{
+		field: 'comment',
+		headerName: 'TypeOfMutation',
+		editable: true,
+		width: 150
+	},
 ];
 
 

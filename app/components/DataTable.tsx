@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { columns } from "../mocks";
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { Annotation, AnnotationStatus, IBiopsyResult, IGeneInfo } from "../types";
+import { Annotation, AnnotationStatus, IBiopsyResult, IGeneInfo, IRelevantReport } from "../types";
 import BackendApi from "../api/BackendApi";
 import { useParams } from "react-router-dom";
 
@@ -13,6 +13,7 @@ export const DataTable: FC<Props> = () => {
 	const [biopsy, setBiopsy] = useState<IBiopsyResult>();
 	const [rows, setRows] = useState<IGeneInfo[]>([]);
 	const [formData, setFormData] = useState({});
+	const [relevantData, setRelevantData] = useState<IRelevantReport[]>();
 
 	useEffect(() => {
 		handleUpload();
@@ -29,7 +30,7 @@ export const DataTable: FC<Props> = () => {
 					console.log('bb', bb);
 
 					setRows(Object.values(bb).map((item, index) => ({ annotation: undefined, id: index + 1, ...item })))
-					setBiopsy(bio);
+					setBiopsy({...bio, results: bb});
 					getRelevantData(bio);
 				}
 			}
@@ -44,7 +45,7 @@ export const DataTable: FC<Props> = () => {
 		try {
 			const codingRegionChanges = Object.values(bio?.results).map(result => result.codingRegionChange);
 			const relevantData = await BackendApi.getRelevantReports(codingRegionChanges);
-
+			setRelevantData(relevantData)
 			console.log('relevantData', relevantData);
 		} catch (error) {
 			console.log(error);
@@ -63,7 +64,7 @@ export const DataTable: FC<Props> = () => {
 		setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
 	};
 
-	const handleSubmit = async () => {
+	const handleGenerate = async () => {
 		// console.log('formData', formData);
 	};
 
@@ -82,6 +83,7 @@ export const DataTable: FC<Props> = () => {
 					getCellClassName={(params) => {
 						// console.log('cellClassName', params);
 						return params.value === 'Warning' ? 'bg-warning' : '' }}
+
 					slots={{ toolbar: GridToolbar }}
 					slotProps={{
 						toolbar: {
@@ -98,7 +100,7 @@ export const DataTable: FC<Props> = () => {
 						<label htmlFor="floatingTextarea2">Conclusion</label>
 					</div>
 					<div className="d-flex justify-content-md-end">
-						<button type="button" className="btn btn-primary mt-5" onClick={handleSubmit}>Send</button>
+						<button type="button" className="btn btn-primary mt-5" onClick={handleGenerate}>Export</button>
 					</div>
 				</form>
 			</div>
