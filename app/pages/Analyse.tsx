@@ -29,8 +29,8 @@ export const Analyse: FC<Props> = () => {
 
 	return (
 		<>
-			<h1>{!isCompleted ? 'Upload your file' : 'Your parsed data'}</h1>
-
+			<h1 className="mt-3">{!isCompleted ? 'Upload your file' : 'Your parsed data'}</h1>
+			{/* <UploadStepper file={file} fileType={fileType} setIsCompleted={setIsCompleted} /> */}
 			{!isCompleted ? <>
 				{file ?
 					<UploadStepper file={file} fileType={fileType} setIsCompleted={setIsCompleted} />

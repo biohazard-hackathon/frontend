@@ -6,6 +6,7 @@ import {createUUID} from "../helpers";
 import BackendApi from "../api/BackendApi";
 import {IIngestionProgress, IngestionStatus} from "../types";
 import axios from 'axios';
+import { useNavigate } from "react-router";
 
 interface Props {
 	file: File | undefined;
@@ -14,12 +15,12 @@ interface Props {
 }
 
 const IngestionStatusToSteps = {
-	STARTED: 1,
-	COMPLETED: 5,
 	ERROR: 0,
+	STARTED: 1,
 	SHEET_LOADED: 2,
-	SHEET_PARSED: 4,
-	SHEET_VALIDATED: 3,
+	SHEET_PARSED: 3,
+	SHEET_VALIDATED: 4,
+	COMPLETED: 5,
 };
 
 export const UploadStepper: FC<Props> = ({file, fileType, setIsCompleted}) => {
@@ -27,6 +28,7 @@ export const UploadStepper: FC<Props> = ({file, fileType, setIsCompleted}) => {
 	const [stepper, setStepper] = useState<Stepper>();
 	const [activeStep, setActiveStep] = useState(IngestionStatusToSteps.STARTED);
 	const [activeSignal, setSignal] = useState<IIngestionProgress>();
+	const navigate = useNavigate()
 
 	async function handleUpload() {
 		const uuid = createUUID();
@@ -59,16 +61,21 @@ export const UploadStepper: FC<Props> = ({file, fileType, setIsCompleted}) => {
 	}, []);
 
 	useEffect(() => {
+		console.log('activeSignal', activeSignal);
 		if (activeSignal) {
 			const signalStatus = activeSignal.status;
 			const signal = IngestionStatusToSteps[signalStatus];
 			if (signalStatus === IngestionStatus.COMPLETED) {
+				setActiveStep(signal);
 
 				setTimeout(() => {
 					setIsCompleted(true);
+					navigate(`/analyse/${activeSignal.id}`)
 				}, 3000);
 			}
-			setActiveStep(signal);
+			if (activeStep < signal) {
+				setActiveStep(signal);
+			}
 			console.log('signal', signal);
 			stepper?.to(signal);
 		}
@@ -78,41 +85,52 @@ export const UploadStepper: FC<Props> = ({file, fileType, setIsCompleted}) => {
 
 	};
 
+	const handleNext = () => {
+		stepper?.next()
+		setActiveStep(activeStep + 1)
+	}
+
 	// const handleNext = () => {
 	// 	stepper?.next()
 	// 	setActiveStep(activeStep + 1)
 	// }
+	// STARTED = 'STARTED',
+    // COMPLETED = 'COMPLETED',
+    // ERROR = 'ERROR',
+	// SHEET_LOADED = 'SHEET_LOADED',
+	// SHEET_PARSED = 'SHEET_PARSED',
+	// SHEET_VALIDATED = 'SHEET_VALIDATED'
 
 	console.log('activeStep', activeStep);
 	console.log('activeSignal', activeSignal);
 	return <div id="stepper1" className="bs-stepper bg-white shadow rounded-lg p-5">
 		<div className="bs-stepper-header">
-			<div className="step" data-target="#upload-step-1">
+			<div className="step" data-target="#step-started">
 				<button className="step-trigger">
 					<span className="bs-stepper-circle"><Icon name="cloud-arrow-up"/></span>
 					<span className="bs-stepper-label">Uploading</span>
 				</button>
 			</div>
-			<div className="line"/>
-			<div className="step" data-target="#upload-step-2">
+			<div className="line" />
+			<div className="step" data-target="#step-sheet-loaded">
 				<button className="step-trigger">
-					<span className="bs-stepper-circle">2</span>
-					<span className="bs-stepper-label">Something</span>
+					<span className="bs-stepper-circle"><Icon name="spinner" /></span>
+					<span className="bs-stepper-label">Sheet loaded</span>
 				</button>
 			</div>
-			<div className="line"/>
-			<div className="step" data-target="#upload-step-3">
+			<div className="line" />
+			<div className="step" data-target="#step-sheet-parsed">
 				<button className="step-trigger">
-					<span className="bs-stepper-circle">3</span>
-					<span className="bs-stepper-label">Something</span>
+					<span className="bs-stepper-circle"><Icon name="file-code" /></span>
+					<span className="bs-stepper-label">Sheet parsed</span>
 				</button>
 			</div>
 
-			<div className="line"/>
-			<div className="step" data-target="#upload-step-4">
+			<div className="line" />
+			<div className="step" data-target="#step-sheet-validated">
 				<button className="step-trigger">
-					<span className="bs-stepper-circle">4</span>
-					<span className="bs-stepper-label">Something</span>
+					<span className="bs-stepper-circle"><Icon name="check" /></span>
+					<span className="bs-stepper-label">Sheet validated</span>
 				</button>
 			</div>
 
@@ -125,8 +143,9 @@ export const UploadStepper: FC<Props> = ({file, fileType, setIsCompleted}) => {
 			</div>
 		</div>
 		<div className="bs-stepper-content">
+			{/* <div className="btn btn-primary" onClick={handleNext} /> */}
 			<form onSubmit={onSubmit}>
-				<div id="upload-step-1" className="content container p-5 text-center">
+				<div id="step-started" className="content container p-3 text-center">
 					<div className="form-group">
 						{file && <div className="p-2">
 							<img
@@ -148,33 +167,47 @@ export const UploadStepper: FC<Props> = ({file, fileType, setIsCompleted}) => {
 						<div className="spinner-grow text-info" role="status">
 							{/* <span className="sr-only">Loading...</span> */}
 						</div>
-						<div className="">Uploading file...</div>
+						<div className="text-muted">Uploading file ..</div>
 					</div>
 				</div>
 
-				<div id="upload-step-2" className="content">
-					<div className="form-group">
-						<label htmlFor="exampleInputPassword1">Password</label>
-						<input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
+
+				<div id="step-sheet-parsed" className="content container p-3 text-center">
+					<div className="p-2">
+						<img src="/images/parsed_sheet.png" className="d-block w-25 mx-auto mb-4"/>
 					</div>
-					<button className="btn btn-primary" onClick={() => stepper?.next()}>Next</button>
+					<div>
+						<h2 className="text-muted">Sheet is parsed ..</h2>
+					</div>
 				</div>
 
-				<div id="upload-step-3" className="content text-center">
-					<button type="submit" className="btn btn-primary mt-5">Submit</button>
+				<div id="step-sheet-loaded" className="content container p-3 text-center">
+					<div className="p-2">
+						<img src="/images/loaded_sheet.png" className="d-block w-25 mx-auto mb-4"/>
+					</div>
+					<div>
+						<h2 className="text-muted">Sheet is loaded ..</h2>
+						{activeSignal?.output && <p>File size: {activeSignal?.output ? JSON.parse(activeSignal.output).size : ''}</p>}
+					</div>
 				</div>
 
-				<div id="upload-step-4" className="content">
-					<div className="form-group">
-						<Icon name="biohazard" spin fixedWidth size="md" />
+				<div id="step-sheet-validated" className="content container p-3 text-center">
+					<div className="p-2 d-flex align-items-center">
+						<img src="/images/encrypt-icon.png" className="d-block w-25 h-25 mx-auto mb-4"/>
+						<span className="display-3">&</span>
+						<img src="/images/checklist.png" className="d-block w-25 mx-auto mb-4"/>
 					</div>
-					<button className="btn btn-primary" onClick={() => stepper?.next()}>Next</button>
+					<div>
+						<h2 className="text-muted">Sheet is validated ..</h2>
+						<p>Available tab names:</p>
+						<ul>{activeSignal?.output ? JSON.parse(activeSignal.output).split(', ').map((item: string) => <li>{item}</li>) : ''}</ul>
+					</div>
 				</div>
 
 				<div id="step-completed" className="content">
-					<div className="form-group text-center p-5">
+					<div className="form-group text-center p-3">
 						<Icon name="check" size="3x" />
-						<h3>All set</h3>
+						<h3>All set.. Generating table ..</h3>
 					</div>
 				</div>
 			</form>
