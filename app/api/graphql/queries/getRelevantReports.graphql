@@ -1,5 +1,5 @@
-query GetRelevantReports($codingRegionChanges: [String]!) {
-    getRelevantReports(codingRegionChanges: $codingRegionChanges) {
+query GetRelevantReports($codingRegionChange: [String]!) {
+    getRelevantReports(codingRegionChange: $codingRegionChange) {
         codingRegionChange
         id
     }

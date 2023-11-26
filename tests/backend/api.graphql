@@ -53,9 +53,9 @@ type Query {
     """
     getBiopsyResult(id: ID!): BiopsyResult!
     """
-    Returns relevant reports based on codingRegionChanges
+    Returns relevant biopsy results based on coding region change
     """
-    getRelevantReports(codingRegionChanges: [String]!): [RelevantReport]!
+    getRelevantReports(codingRegionChange: [String]!): [RelevantReport]!
 }
 
 """
