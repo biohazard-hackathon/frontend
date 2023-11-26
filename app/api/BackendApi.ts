@@ -20,6 +20,13 @@ import GetRelevantReports from './graphql/queries/getRelevantReports.graphql';
 import {ApolloQueryResult} from 'apollo-client';
 import client from './AppsyncClient';
 import {IBiopsyResult, IGeneInfo, IIngestionProgress, IRelevantReport} from '../types';
+import {AWS_REGION, IDENTITY_POOL_ID, S3_BUCKET} from '../constants/env';
+import {PutObjectCommand, S3Client} from '@aws-sdk/client-s3';
+import {getSignedUrl} from '@aws-sdk/s3-request-presigner';
+// import s3Client from './S3Client';
+import {Auth} from 'aws-amplify';
+import {fromCognitoIdentityPool} from '@aws-sdk/credential-providers';
+
 
 export interface UserInfo {
 	id: number;
@@ -108,8 +115,32 @@ export default class BackendApi extends BaseApi {
 
 			const output = await this.startIngestionMutation(id);
 			console.log({mutation: output});
-			return
+			return;
 		});
+	}
+
+	public static async getPresignedLinkForUpload(key: string) {
+		// const credentials = await Auth.currentCredentials();
+		const config = {
+			clientConfig: {region: AWS_REGION},
+			identityPoolId: IDENTITY_POOL_ID,
+			logins: {
+				"cognito-idp.us-east-1.amazonaws.com/us-east-1_ifEOrHfGw": async () =>
+					(await Auth.currentSession()).getIdToken().getJwtToken(),
+			},
+		};
+
+		const s3Client = new S3Client({
+			region: AWS_REGION,
+			credentials: fromCognitoIdentityPool(config),
+		});
+
+		const command = new PutObjectCommand({
+			Bucket: S3_BUCKET,
+			Key: key + '.xlsx',
+			ContentType: "vnd.ms-excel",
+		});
+		return getSignedUrl(s3Client, command, {expiresIn: 3600});
 	}
 
 	public async getLoggedUserInfo(): Promise<UserInfo> {
