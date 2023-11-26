@@ -2,17 +2,19 @@ import React, { FC, useState } from "react";
 
 interface Props {
 	isXls?: boolean;
+	setFile?: (file: File) => void;
+	selectedFile: File | undefined;
+	setFileType: (type: string) => void;
 }
 
-export const UploadFile: FC<Props> = ({ isXls = true }) => {
-
-	const [selectedFile, setSelectedFile] = useState<any>()
+export const UploadFile: FC<Props> = ({ setFile, isXls = true, selectedFile, setFileType }) => {
 
 	function readURL(event: any) {
 		console.log('event', event)
 		console.log('files', event.target.files)
 
-		setSelectedFile(event.target.files[0])
+		setFile && setFile(event.target.files[0])
+		setFileType(isXls ? 'excel' : 'fasta');
 		// if (input.files && input.files[0]) {
 		// 	var reader = new FileReader();
 
@@ -45,11 +47,6 @@ export const UploadFile: FC<Props> = ({ isXls = true }) => {
 									<p>
 										File Type:{" "}
 										{selectedFile.type}
-									</p>
-
-									<p>
-										Last Modified:{" "}
-										{selectedFile.lastModifiedDate.toDateString()}
 									</p>
 								</div> : <>
 									<div className="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">

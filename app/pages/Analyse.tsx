@@ -1,7 +1,9 @@
 import React, { FC, useState } from "react";
-import BackendApi from '../api/BackendApi';
 
+import BackendApi from '../api/BackendApi';
+import { DataTable } from "../components/DataTable";
 import { UploadFile } from "../components/UploadFile";
+import { UploadStepper } from "../components/UploadStepper";
 
 interface Props {
 
@@ -9,11 +11,15 @@ interface Props {
 
 export const Analyse: FC<Props> = () => {
 	const [formData, setFormData] = useState({});
+	const [file, setFile] = useState<File>();
+	const [fileType, setFileType] = useState<string>();
+	const [isCompleted, setIsCompleted] = useState(false);
 
+	console.log('isCompleted', isCompleted);
 	const handleChange = (event: any) => {
 		console.log('event', event);
-		const {name, value} = event.target;
-		setFormData((prevFormData) => ({...prevFormData, [name]: value}));
+		const { name, value } = event.target;
+		setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
 	};
 
 	const handleSubmit = async () => {
@@ -24,12 +30,20 @@ export const Analyse: FC<Props> = () => {
 
 	return (
 		<>
-			<h1>Upload your file</h1>
+			{!isCompleted && (
+				<>
+					<h1>Upload your file</h1>
 
-			<div className="d-flex">
-				<UploadFile />
-				<UploadFile isXls={false} />
-			</div>
+					{file ?
+						<UploadStepper file={file} fileType={fileType} setIsCompleted={setIsCompleted} />
+						:
+						<div className="d-flex">
+							<UploadFile setFile={setFile} selectedFile={file} setFileType={setFileType} />
+							<UploadFile isXls={false} setFile={setFile} selectedFile={file} setFileType={setFileType} />
+						</div>
+					}
+				</>
+			)}
 
 			{/* <form action="submitForm">
 				<div className="form-floating">
@@ -41,9 +55,9 @@ export const Analyse: FC<Props> = () => {
 				</div>
 			</form> */}
 
-			<div className="container">
-				{Object.values(formData).map((item) => <div className="">{item}</div>)}
-			</div>
+			{isCompleted &&
+				<DataTable />
+			}
 		</>
 	);
 };

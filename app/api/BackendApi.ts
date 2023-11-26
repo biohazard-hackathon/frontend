@@ -70,7 +70,7 @@ export default class BackendApi extends BaseApi {
 	}
 
 	// SUBSCRIPTIONS
-	public static async onProgressUpdateSubscription(id: string) {
+	public static async onProgressUpdateSubscription(id: string, setSignal: Function) {
 		client.hydrated().then(async () => {
 			const subscription = client.subscribe({
 				query: OnProgressUpdate,
@@ -84,6 +84,8 @@ export default class BackendApi extends BaseApi {
 					const response = data.data.onProgressUpdate;
 					console.log('Signal:', response); // here is what the incoming signals are coming to us
 					const result = response.output;
+					setSignal(response);
+
 					console.log({subscription: result});
 				},
 				complete: console.log,
@@ -92,6 +94,7 @@ export default class BackendApi extends BaseApi {
 
 			const output = await this.startIngestionMutation(id);
 			console.log({mutation: output});
+			return
 		});
 	}
 
