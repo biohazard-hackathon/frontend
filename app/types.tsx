@@ -13,6 +13,9 @@ export enum IngestionStatus {
     STARTED = 'STARTED',
     COMPLETED = 'COMPLETED',
     ERROR = 'ERROR',
+	SHEET_LOADED = 'SHEET_LOADED',
+	SHEET_PARSED = 'SHEET_PARSED',
+	SHEET_VALIDATED = 'SHEET_VALIDATED'
 }
 
 export enum Annotation {
