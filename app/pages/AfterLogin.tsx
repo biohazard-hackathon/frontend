@@ -1,10 +1,16 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
+import { useNavigate } from "react-router";
 
 interface Props {
 
 }
 export const AfterLogin: FC<Props> = () => {
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		navigate('/analyse')
+	})
 	return (
-		<h3>After login magic</h3>
+		<></>
 	)
 }
