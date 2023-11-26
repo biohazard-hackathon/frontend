@@ -21,6 +21,7 @@ export default class RootRouter extends Component<Props, State> {
 				<Route path="*" element={<ErrorPage {...this.props}/>}/>
 				<Route path="/after-login" element={<AfterLogin {...this.props}/>}/>
 				<Route path="/analyse" element={<Analyse {...this.props}/>}/>
+				<Route path="/analyse/:id" element={<Analyse {...this.props}/>}/>
 				<Route path="/logout" element={<Logout {...this.props}/>}/>
 			</Routes>
 		</BrowserRouter>;

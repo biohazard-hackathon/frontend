@@ -10,7 +10,8 @@ import { IIngestionProgress, IngestionStatus } from "../types";
 interface Props {
 	file: File | undefined;
 	fileType: string | undefined;
-	setIsCompleted: (completed: boolean) => void
+	setIsCompleted: (completed: boolean) => void;
+	setUuid: (uuid: string) => void;
 }
 
 const IngestionStatusToSteps = {
@@ -62,7 +63,7 @@ export const UploadStepper: FC<Props> = ({file, fileType, setIsCompleted}) => {
 	}
 
 	async function handleUpload () {
-		const uuid = createUUID();
+		const uuid = createUUID(); // test: pouzit sample
 		console.log(`Starting subscription for ${uuid}`);
 
 		try {
@@ -77,8 +78,8 @@ export const UploadStepper: FC<Props> = ({file, fileType, setIsCompleted}) => {
 	// 	setActiveStep(activeStep + 1)
 	// }
 
-	console.log('activeStep', activeStep);
-	console.log('activeSignal', activeSignal);
+	// console.log('activeStep', activeStep);
+	// console.log('activeSignal', activeSignal);
 	return <div id="stepper1" className="bs-stepper bg-white shadow rounded-lg p-5">
 		<div className="bs-stepper-header">
 			<div className="step" data-target="#upload-step-1">

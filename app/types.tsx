@@ -24,6 +24,12 @@ export enum Annotation {
 	OK = 'OK',
 }
 
+export const AnnotationStatus = {
+	[Annotation.INCONCLUSIVE]: 'warning',
+	[Annotation.OK]: 'success',
+	[Annotation.DANGER]: 'danger',
+}
+
 export interface IIngestionProgress {
 	id: string,
 	status: IngestionStatus,
