@@ -27,6 +27,9 @@ const resolverMap = {
 		getRelevantReport() {
 			return readResponse('relevantReport');
 		},
+		listReports() {
+			return [{id: 'id1', blockId: 'asdfasdfasdf'}, {id:'id2', blockId: 'asdfaserfaefhekj'}];
+		},
 	},
 	Subscription: {
 		onProgressUpdate() {
