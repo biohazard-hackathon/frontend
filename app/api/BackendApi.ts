@@ -19,7 +19,7 @@ import GetBiopsyResult from './graphql/queries/getBiopsyResult.graphql';
 import GetRelevantReports from './graphql/queries/getRelevantReports.graphql';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import ListReports from './graphql/queries/ListReports.graphql';
+import ListReports from './graphql/queries/listReports.graphql';
 import {ApolloQueryResult} from 'apollo-client';
 import client from './AppsyncClient';
 import {IBiopsyResult, IGeneInfo, IIngestionProgress, IRelevantReport} from '../types';
