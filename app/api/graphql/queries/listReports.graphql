@@ -1,0 +1,6 @@
+query ListReports {
+    listReports {
+        id
+        blockId
+    }
+}

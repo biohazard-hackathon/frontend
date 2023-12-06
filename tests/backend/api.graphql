@@ -56,6 +56,10 @@ type Query {
     Returns relevant biopsy results based on coding region change
     """
     getRelevantReports(codingRegionChange: [String]!): [RelevantReport]!
+    """
+    Lists all reports
+    """
+    listReports: [BiopsyResult]!
 }
 
 """

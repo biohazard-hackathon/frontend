@@ -17,6 +17,9 @@ import GetBiopsyResult from './graphql/queries/getBiopsyResult.graphql';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import GetRelevantReports from './graphql/queries/getRelevantReports.graphql';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import ListReports from './graphql/queries/listReports.graphql';
 import {ApolloQueryResult} from 'apollo-client';
 import client from './AppsyncClient';
 import {IBiopsyResult, IGeneInfo, IIngestionProgress, IRelevantReport} from '../types';
@@ -63,6 +66,18 @@ export default class BackendApi extends BaseApi {
 			},
 		});
 		return status.data.getRelevantReports;
+	}
+
+	public static async listUniqueReports(): Promise<IBiopsyResult[]> {
+		const status: ApolloQueryResult<{ listReports: [IBiopsyResult] }> = await client.query({
+			query: ListReports,
+			fetchPolicy: 'network-only',
+		});
+
+		const output = status.data.listReports;
+
+		const map = new Map(output.map(res => [res.blockId, res]));
+		return [...map.values()];
 	}
 
 	// MUTATIONS
