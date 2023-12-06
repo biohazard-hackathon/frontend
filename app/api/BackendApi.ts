@@ -68,12 +68,16 @@ export default class BackendApi extends BaseApi {
 		return status.data.getRelevantReports;
 	}
 
-	public static async listReports(): Promise<IBiopsyResult[]> {
+	public static async listUniqueReports(): Promise<IBiopsyResult[]> {
 		const status: ApolloQueryResult<{ listReports: [IBiopsyResult] }> = await client.query({
 			query: ListReports,
 			fetchPolicy: 'network-only',
 		});
-		return status.data.listReports;
+
+		const output = status.data.listReports;
+
+		const map = new Map(output.map(res => [res.blockId, res]));
+		return [...map.values()];
 	}
 
 	// MUTATIONS
