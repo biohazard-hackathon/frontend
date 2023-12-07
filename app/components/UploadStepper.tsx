@@ -71,7 +71,7 @@ export const UploadStepper: FC<Props> = ({file, fileType, setIsCompleted}) => {
 
 				setTimeout(() => {
 					setIsCompleted(true);
-					window.location.replace(`/analyse/${activeSignal.id}`)
+					window.location.replace(`/biopsies/${activeSignal.id}`)
 				}, 3000);
 			}
 			if (activeStep < signal) {
