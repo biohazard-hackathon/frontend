@@ -1,12 +1,11 @@
 import React, {FC, useEffect, useState} from "react";
-import {columns} from "../mocks";
+import {columns} from "../tableConfig";
 import {DataGrid, GridToolbar} from '@mui/x-data-grid';
 import {Annotation, AnnotationStatus, IBiopsyResult, IGeneInfo, IRelevantReport} from "../types";
 import BackendApi from "../api/BackendApi";
 import {useParams} from "react-router-dom";
 
 interface Props {
-
 }
 
 export const DataTable: FC<Props> = () => {
@@ -33,10 +32,9 @@ export const DataTable: FC<Props> = () => {
 					const mutationsWithReports = relevantReportsData.map(mutation => mutation.codingRegionChange);
 
 					setRows(Object.values(bb).map((item, index) => {
-
 						if (mutationsWithReports.includes(item.codingRegionChange)) {
 							return ({
-								annotation: undefined,
+								annotation: Annotation.NONE,
 								id: index + 1, ...item,
 								relevantReports: relevantReportsData.filter(report => report.codingRegionChange === item.codingRegionChange),
 							});
@@ -74,28 +72,31 @@ export const DataTable: FC<Props> = () => {
 
 	return (
 		<>
-			<div className="bg-white shadow rounded-lg p-5">
-				<DataGrid
-					rows={rows}
-					columns={columns}
-					getRowClassName={(params) => {
-						// console.log('params', params);
-						return `color-table-${AnnotationStatus[params.row.annotation as Annotation]}` ?? '';
-					}}
-					getCellClassName={(params) => {
-						// console.log('cellClassName', params);
-						return params.value === 'Warning' ? 'bg-warning' : '';
-					}}
+			<div className="bg-white shadow rounded-lg p-5 mx-5">
+				{!rows.length ?
+					<p>...Loading</p> :
+					<DataGrid
+						rows={rows}
+						columns={columns}
+						getRowClassName={(params) => {
+							// console.log('params', params);
+							return `color-table-${AnnotationStatus[params.row.annotation as Exclude<Annotation, Annotation.NONE>]}` ?? '';
+						}}
+						getCellClassName={(params) => {
+							// console.log('cellClassName', params);
+							return params.value === 'Warning' ? 'bg-warning' : '';
+						}}
 
-					slots={{toolbar: GridToolbar}}
-					slotProps={{
-						toolbar: {
-							showQuickFilter: true,
-						},
-					}}
-				/>
+						slots={{toolbar: GridToolbar}}
+						slotProps={{
+							toolbar: {
+								showQuickFilter: true,
+							},
+						}}
+					/>
+				}
 			</div>
-			<div className="mt-3">
+			<div className="mx-5 mt-3">
 				<h2>Conclusion</h2>
 				<form action="submitForm mt-3">
 					<div className="form-floating">

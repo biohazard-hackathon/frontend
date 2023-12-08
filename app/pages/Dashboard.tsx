@@ -718,7 +718,7 @@ export const Dashboard: FC<Props> = () => {
 								</div>
 							</div>
 						</div> */}
-						<div className="row">
+						{/* <div className="row">
 							<div className="col-md-6 col-xl-4">
 								<div className="card mb-3 widget-content bg-midnight-bloom">
 									<div className="widget-content-wrapper text-white">
@@ -740,7 +740,7 @@ export const Dashboard: FC<Props> = () => {
 											<div className="widget-subheading">Total Clients Profit</div>
 										</div>
 										<div className="widget-content-right">
-											<div className="widget-numbers text-white"><span>$ 568</span></div>
+											<div className="widget-numbers text-white"><span> 568</span></div>
 										</div>
 									</div>
 								</div>
@@ -766,13 +766,13 @@ export const Dashboard: FC<Props> = () => {
 											<div className="widget-subheading">Revenue streams</div>
 										</div>
 										<div className="widget-content-right">
-											<div className="widget-numbers text-warning"><span>$14M</span></div>
+											<div className="widget-numbers text-warning"><span>14M</span></div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div className="row">
+						</div> */}
+						{/* <div className="row">
 							<div className="col-md-12 col-lg-6">
 								<div className="mb-3 card">
 									<div className="card-header-tab card-header-tab-animation card-header">
@@ -811,7 +811,7 @@ export const Dashboard: FC<Props> = () => {
 																		</div>
 																		<div className="widget-content-right">
 																			<div className="font-size-xlg text-muted">
-																				<small className="opacity-5 pr-1">$</small>
+																				<small className="opacity-5 pr-1"></small>
 																				<span>129</span>
 																				<small className="text-danger pl-2">
 																					<i className="fa fa-angle-down"></i>
@@ -833,7 +833,7 @@ export const Dashboard: FC<Props> = () => {
 																		</div>
 																		<div className="widget-content-right">
 																			<div className="font-size-xlg text-muted">
-																				<small className="opacity-5 pr-1">$</small>
+																				<small className="opacity-5 pr-1"></small>
 																				<span>54</span>
 																				<small className="text-success pl-2">
 																					<i className="fa fa-angle-up"></i>
@@ -855,7 +855,7 @@ export const Dashboard: FC<Props> = () => {
 																		</div>
 																		<div className="widget-content-right">
 																			<div className="font-size-xlg text-muted">
-																				<small className="opacity-5 pr-1">$</small>
+																				<small className="opacity-5 pr-1"></small>
 																				<span>429</span>
 																				<small className="text-warning pl-2">
 																					<i className="fa fa-dot-circle"></i>
@@ -877,7 +877,7 @@ export const Dashboard: FC<Props> = () => {
 																		</div>
 																		<div className="widget-content-right">
 																			<div className="font-size-xlg text-muted">
-																				<small className="opacity-5 pr-1">$</small>
+																				<small className="opacity-5 pr-1"></small>
 																				<span>129</span>
 																				<small className="text-danger pl-2">
 																					<i className="fa fa-angle-down"></i>
@@ -899,7 +899,7 @@ export const Dashboard: FC<Props> = () => {
 																		</div>
 																		<div className="widget-content-right">
 																			<div className="font-size-xlg text-muted">
-																				<small className="opacity-5 pr-1">$</small>
+																				<small className="opacity-5 pr-1"></small>
 																				<span>54</span>
 																				<small className="text-success pl-2">
 																					<i className="fa fa-angle-up"></i>
@@ -1029,7 +1029,7 @@ export const Dashboard: FC<Props> = () => {
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> */}
 						<div className="row">
 							<div className="col-md-6 col-xl-4">
 								<div className="card mb-3 widget-content">
@@ -1055,7 +1055,7 @@ export const Dashboard: FC<Props> = () => {
 												<div className="widget-subheading">Revenue streams</div>
 											</div>
 											<div className="widget-content-right">
-												<div className="widget-numbers text-warning">$3M</div>
+												<div className="widget-numbers text-warning">3M</div>
 											</div>
 										</div>
 									</div>
@@ -1085,7 +1085,7 @@ export const Dashboard: FC<Props> = () => {
 												<div className="widget-subheading">Expected totals</div>
 											</div>
 											<div className="widget-content-right">
-												<div className="widget-numbers text-focus">$147</div>
+												<div className="widget-numbers text-focus">147</div>
 											</div>
 										</div>
 										<div className="widget-progress-wrapper">

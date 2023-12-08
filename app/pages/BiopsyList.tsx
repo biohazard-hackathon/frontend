@@ -32,40 +32,36 @@ export const BiopsyList: FC<Props> = ({}) => {
 	console.log('biopsyResults', biopsyResults)
 
 	return (
-		<div className="container mt-5">
-        <div className="row">
-            <div className="col-md-12">
-                <div className="d-flex justify-content-between align-items-center activity">
-                    <div></div>
-                    <h2>Biopsies</h2>
-                    <div className="icons"></div>
-                </div>
-                <div className="mt-3">
-                    <ul className="list list-inline">
-						{biopsyResults?.map(biopsyResult => (
-							<li className="d-flex justify-content-between">
-								<div className="d-flex flex-row align-items-center">
-									<div className="ml-2">
-										<h6 className="mb-0">{biopsyResult.id}</h6>
-										<div className="d-flex flex-row mt-1 text-black-50 date-time">
-											<div><i className="fa fa-calendar-o"></i><span className="ml-2">BlockId: {biopsyResult.blockId}</span></div>
+		<div className="container">
+			<h1 className="my-5">Biopsies</h1>
+			<div className="row">
+				<div className="col-md-12">
+					<div className="mt-3">
+						<ul className="list list-inline">
+							{biopsyResults?.map(biopsyResult => (
+								<li className="d-flex justify-content-between">
+									<div className="d-flex flex-row align-items-center">
+										<div className="ml-2">
+											<h6 className="mb-0">{biopsyResult.blockId}</h6>
+											<div className="d-flex flex-row mt-1 text-black-50 date-time">
+												<div><i className="fa fa-calendar-o"></i><span className="ml-2">ID: {biopsyResult.id}</span></div>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div className="d-flex flex-row align-items-center">
-									<div className="d-flex flex-column mr-2">
-										<div className="profile-image">
-										<a href={`/biopsies/${biopsyResult.id}`} className="btn btn-info" role="button">Show detail</a>
+									<div className="d-flex flex-row align-items-center">
+										<div className="d-flex flex-column mr-2">
+											<div className="profile-image">
+											<a href={`/biopsies/${biopsyResult.id}`} className="btn btn-info" role="button">Show detail</a>
+											</div>
+											{/* <span className="date-time">11/4/2020 12:55</span> */}
 										</div>
-										{/* <span className="date-time">11/4/2020 12:55</span> */}
 									</div>
-								</div>
-							</li>
-						))}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+								</li>
+							))}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
 	)
 }

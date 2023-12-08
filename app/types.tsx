@@ -19,6 +19,7 @@ export enum IngestionStatus {
 }
 
 export enum Annotation {
+	NONE = '-',
 	DANGER = 'DANGER',
 	INCONCLUSIVE = 'INCONCLUSIVE',
 	OK = 'OK',

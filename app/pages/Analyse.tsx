@@ -33,8 +33,8 @@ export const Analyse: FC<Props> = () => {
 	const showDetail = isCompleted || uuid;
 
 	return (
-		<>
-			<h1>Upload your file</h1>
+		<div className="container">
+			<h1 className="my-5">Upload your file</h1>
 			{file && !isCompleted ?
 				<UploadStepper file={file} fileType={fileType} setIsCompleted={setIsCompleted} setUuid={handleFinished} />
 				:
@@ -43,6 +43,6 @@ export const Analyse: FC<Props> = () => {
 					<UploadFile isXls={false} setFile={setFile} selectedFile={file} setFileType={setFileType} />
 				</div>
 			}
-		</>
+		</div>
 	);
 };
