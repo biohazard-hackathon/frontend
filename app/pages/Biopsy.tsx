@@ -9,9 +9,9 @@ interface Props {
 export const Biopsy: FC<Props> = ({}) => {
 
 	return (
-		<>
-		<h1>Your parsed data</h1>
-		<DataTable />
-		</>
+		<div className="container">
+			<h1 className="my-2">Parsed data</h1>
+			<DataTable />
+		</div>
 	)
 }
