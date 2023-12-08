@@ -26,7 +26,7 @@ export const Analyse: FC<Props> = () => {
 
 	const handleFinished = (completedUuid: string) => {
 		setUUid(completedUuid)
-		navigate(`/analyse/${completedUuid}`);
+		navigate(`/biopsies/${completedUuid}`);
 	}
 
 
