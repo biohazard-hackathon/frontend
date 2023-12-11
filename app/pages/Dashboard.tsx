@@ -1,10 +1,33 @@
-import React, { FC } from "react"
+import React, { FC, useEffect, useState } from "react"
+import BackendApi from "../api/BackendApi";
+import { IBiopsyResult } from "../types";
 
 interface Props {
 
 }
 
 export const Dashboard: FC<Props> = () => {
+
+	const [biopsyResults, setBiopsyResults] = useState<IBiopsyResult[]>()
+
+	async function getResults() {
+		let reports: IBiopsyResult[] = [];
+		try {
+			reports = await BackendApi.listUniqueReports();
+
+			if (!biopsyResults?.length) {
+				setBiopsyResults(reports);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+
+		return reports;
+	}
+
+	useEffect(() => {
+		getResults()
+	}, [])
 
 	return (
 		<div className="app-container app-theme-white body-tabs-shadow">
@@ -1036,11 +1059,11 @@ export const Dashboard: FC<Props> = () => {
 									<div className="widget-content-outer">
 										<div className="widget-content-wrapper">
 											<div className="widget-content-left">
-												<div className="widget-heading">Total Orders</div>
-												<div className="widget-subheading">Last year expenses</div>
+												<div className="widget-heading">OK RESULTS</div>
+												<div className="widget-subheading">This week</div>
 											</div>
 											<div className="widget-content-right">
-												<div className="widget-numbers text-success">1896</div>
+												<div className="widget-numbers text-success">30%</div>
 											</div>
 										</div>
 									</div>
@@ -1051,11 +1074,11 @@ export const Dashboard: FC<Props> = () => {
 									<div className="widget-content-outer">
 										<div className="widget-content-wrapper">
 											<div className="widget-content-left">
-												<div className="widget-heading">Products Sold</div>
-												<div className="widget-subheading">Revenue streams</div>
+												<div className="widget-heading">INCONCLUSIVE RESULTS</div>
+												<div className="widget-subheading">This week</div>
 											</div>
 											<div className="widget-content-right">
-												<div className="widget-numbers text-warning">3M</div>
+												<div className="widget-numbers text-warning">45,1%</div>
 											</div>
 										</div>
 									</div>
@@ -1066,17 +1089,17 @@ export const Dashboard: FC<Props> = () => {
 									<div className="widget-content-outer">
 										<div className="widget-content-wrapper">
 											<div className="widget-content-left">
-												<div className="widget-heading">Followers</div>
-												<div className="widget-subheading">People Interested</div>
+												<div className="widget-heading">DANGER RESULTS</div>
+												<div className="widget-subheading">This week</div>
 											</div>
 											<div className="widget-content-right">
-												<div className="widget-numbers text-danger">45,9%</div>
+												<div className="widget-numbers text-danger">24,9%</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div className="d-xl-none d-lg-block col-md-6 col-xl-4">
+							{/* <div className="d-xl-none d-lg-block col-md-6 col-xl-4">
 								<div className="card mb-3 widget-content">
 									<div className="widget-content-outer">
 										<div className="widget-content-wrapper">
@@ -1099,12 +1122,12 @@ export const Dashboard: FC<Props> = () => {
 										</div>
 									</div>
 								</div>
-							</div>
+							</div> */}
 						</div>
 						<div className="row">
 							<div className="col-md-12">
 								<div className="main-card mb-3 card">
-									<div className="card-header">Active Users
+									<div className="card-header">Last biopsies
 										<div className="btn-actions-pane-right">
 											<div role="group" className="btn-group-sm btn-group">
 												<button className="active btn btn-focus">Last Week</button>
@@ -1116,120 +1139,87 @@ export const Dashboard: FC<Props> = () => {
 										<table className="align-middle mb-0 table table-borderless table-striped table-hover">
 											<thead>
 											<tr>
-												<th className="text-center">#</th>
-												<th>Name</th>
-												<th className="text-center">City</th>
+												<th>Identificator</th>
+												{/* <th className="text-center">City</th> */}
 												<th className="text-center">Status</th>
 												<th className="text-center">Actions</th>
 											</tr>
 											</thead>
 											<tbody>
 											<tr>
-												<td className="text-center text-muted">#345</td>
 												<td>
 													<div className="widget-content p-0">
 														<div className="widget-content-wrapper">
-															<div className="widget-content-left mr-3">
-																<div className="widget-content-left">
-																	<img width="40" className="rounded-circle" src="assets/images/avatars/4.jpg" alt="" />
-																</div>
-															</div>
 															<div className="widget-content-left flex2">
-																<div className="widget-heading">John Doe</div>
-																<div className="widget-subheading opacity-7">Web Developer</div>
+																<div className="widget-heading">MAPPED-14338-23</div>
+																<div className="widget-subheading opacity-7">ID: e7010886-0c66-4a48-89ca-ff6c4ffc72a0</div>
 															</div>
 														</div>
 													</div>
 												</td>
-												<td className="text-center">Madrid</td>
 												<td className="text-center">
 													<div className="badge badge-warning">Pending</div>
 												</td>
 												<td className="text-center">
-													<button type="button" id="PopoverCustomT-1" className="btn btn-primary btn-sm">Details</button>
+													<button type="button" id="PopoverCustomT-1" className="btn btn-primary btn-sm">Show detail</button>
 												</td>
 											</tr>
 											<tr>
-												<td className="text-center text-muted">#347</td>
 												<td>
 													<div className="widget-content p-0">
 														<div className="widget-content-wrapper">
-															<div className="widget-content-left mr-3">
-																<div className="widget-content-left">
-																	<img width="40" className="rounded-circle" src="assets/images/avatars/3.jpg" alt="" />
-																</div>
-															</div>
 															<div className="widget-content-left flex2">
-																<div className="widget-heading">Ruben Tillman</div>
-																<div className="widget-subheading opacity-7">Etiam sit amet orci eget</div>
+																<div className="widget-heading">13217-23-1G</div>
+																<div className="widget-subheading opacity-7">ID: c9d8ddd7-bfed-4267-88b8-47c9bd84e665</div>
 															</div>
 														</div>
 													</div>
 												</td>
-												<td className="text-center">Berlin</td>
 												<td className="text-center">
 													<div className="badge badge-success">Completed</div>
 												</td>
 												<td className="text-center">
-													<button type="button" id="PopoverCustomT-2" className="btn btn-primary btn-sm">Details</button>
+													<button type="button" id="PopoverCustomT-2" className="btn btn-primary btn-sm">Show detail</button>
 												</td>
 											</tr>
 											<tr>
-												<td className="text-center text-muted">#321</td>
 												<td>
 													<div className="widget-content p-0">
 														<div className="widget-content-wrapper">
-															<div className="widget-content-left mr-3">
-																<div className="widget-content-left">
-																	<img width="40" className="rounded-circle" src="assets/images/avatars/2.jpg" alt="" />
-																</div>
-															</div>
 															<div className="widget-content-left flex2">
-																<div className="widget-heading">Elliot Huber</div>
-																<div className="widget-subheading opacity-7">Lorem ipsum dolor sic</div>
+																<div className="widget-heading">14013-23-1A</div>
+																<div className="widget-subheading opacity-7">ID: f172d369-b4e4-4e4f-ab76-4214e38dfef8</div>
 															</div>
 														</div>
 													</div>
 												</td>
-												<td className="text-center">London</td>
 												<td className="text-center">
 													<div className="badge badge-danger">In Progress</div>
 												</td>
 												<td className="text-center">
-													<button type="button" id="PopoverCustomT-3" className="btn btn-primary btn-sm">Details</button>
+													<button type="button" id="PopoverCustomT-3" className="btn btn-primary btn-sm">Show detail</button>
 												</td>
 											</tr>
 											<tr>
-												<td className="text-center text-muted">#55</td>
 												<td>
 													<div className="widget-content p-0">
 														<div className="widget-content-wrapper">
-															<div className="widget-content-left mr-3">
-																<div className="widget-content-left">
-																	<img width="40" className="rounded-circle" src="assets/images/avatars/1.jpg" alt="" />
-																</div>
-															</div>
 															<div className="widget-content-left flex2">
-																<div className="widget-heading">Vinnie Wagstaff</div>
-																<div className="widget-subheading opacity-7">UI Designer</div>
+																<div className="widget-heading">14338-23</div>
+																<div className="widget-subheading opacity-7">ID: 727f19e7-4583-496b-830e-85a7c91a45b4</div>
 															</div>
 														</div>
 													</div>
 												</td>
-												<td className="text-center">Amsterdam</td>
 												<td className="text-center">
 													<div className="badge badge-info">On Hold</div>
 												</td>
 												<td className="text-center">
-													<button type="button" id="PopoverCustomT-4" className="btn btn-primary btn-sm">Details</button>
+													<button type="button" id="PopoverCustomT-4" className="btn btn-primary btn-sm">Show detail</button>
 												</td>
 											</tr>
 											</tbody>
 										</table>
-									</div>
-									<div className="d-block text-center card-footer">
-										<button className="mr-2 btn-icon btn-icon-only btn btn-outline-danger"><i className="pe-7s-trash btn-icon-wrapper" /></button>
-										<button className="btn-wide btn btn-success">Save</button>
 									</div>
 								</div>
 							</div>
@@ -1241,16 +1231,16 @@ export const Dashboard: FC<Props> = () => {
 										<div className="widget-content-outer">
 											<div className="widget-content-wrapper">
 												<div className="widget-content-left pr-2 fsize-1">
-													<div className="widget-numbers mt-0 fsize-3 text-danger">71%</div>
+													<div className="widget-numbers mt-0 fsize-3 text-danger">36.5%</div>
 												</div>
 												<div className="widget-content-right w-100">
 													<div className="progress-bar-xs progress">
-														<div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: "71%"}} />
+														<div className="progress-bar bg-danger" role="progressbar" aria-valuenow={36.5} aria-valuemin={0} aria-valuemax={100} style={{width: "36.5%"}} />
 													</div>
 												</div>
 											</div>
 											<div className="widget-content-left fsize-1">
-												<div className="text-muted opacity-6">Income Target</div>
+												<div className="text-muted opacity-6">AVG Quality</div>
 											</div>
 										</div>
 									</div>
@@ -1262,16 +1252,16 @@ export const Dashboard: FC<Props> = () => {
 										<div className="widget-content-outer">
 											<div className="widget-content-wrapper">
 												<div className="widget-content-left pr-2 fsize-1">
-													<div className="widget-numbers mt-0 fsize-3 text-success">54%</div>
+													<div className="widget-numbers mt-0 fsize-3 text-success">28.6%</div>
 												</div>
 												<div className="widget-content-right w-100">
 													<div className="progress-bar-xs progress">
-														<div className="progress-bar bg-success" role="progressbar" aria-valuenow={54} aria-valuemin={0} aria-valuemax={100} style={{width: "54%"}}></div>
+														<div className="progress-bar bg-success" role="progressbar" aria-valuenow={28.6} aria-valuemin={0} aria-valuemax={100} style={{width: "28.6%"}}></div>
 													</div>
 												</div>
 											</div>
 											<div className="widget-content-left fsize-1">
-												<div className="text-muted opacity-6">Expenses Target</div>
+												<div className="text-muted opacity-6">MIN Quality</div>
 											</div>
 										</div>
 									</div>
@@ -1283,16 +1273,16 @@ export const Dashboard: FC<Props> = () => {
 										<div className="widget-content-outer">
 											<div className="widget-content-wrapper">
 												<div className="widget-content-left pr-2 fsize-1">
-													<div className="widget-numbers mt-0 fsize-3 text-warning">32%</div>
+													<div className="widget-numbers mt-0 fsize-3 text-warning">60%</div>
 												</div>
 												<div className="widget-content-right w-100">
 													<div className="progress-bar-xs progress">
-														<div className="progress-bar bg-warning" role="progressbar" aria-valuenow={32} aria-valuemin={0} aria-valuemax={100} style={{width: "32%"}}></div>
+														<div className="progress-bar bg-warning" role="progressbar" aria-valuenow={60} aria-valuemin={0} aria-valuemax={60} style={{width: "100%"}}></div>
 													</div>
 												</div>
 											</div>
 											<div className="widget-content-left fsize-1">
-												<div className="text-muted opacity-6">Spendings Target</div>
+												<div className="text-muted opacity-6">MAX Quality</div>
 											</div>
 										</div>
 									</div>
@@ -1304,16 +1294,16 @@ export const Dashboard: FC<Props> = () => {
 										<div className="widget-content-outer">
 											<div className="widget-content-wrapper">
 												<div className="widget-content-left pr-2 fsize-1">
-													<div className="widget-numbers mt-0 fsize-3 text-info">89%</div>
+													<div className="widget-numbers mt-0 fsize-3 text-info">43%</div>
 												</div>
 												<div className="widget-content-right w-100">
 													<div className="progress-bar-xs progress">
-														<div className="progress-bar bg-info" role="progressbar" aria-valuenow={89} aria-valuemin={0} aria-valuemax={100} style={{width: "89%"}}></div>
+														<div className="progress-bar bg-info" role="progressbar" aria-valuenow={43} aria-valuemin={0} aria-valuemax={100} style={{width: "43%"}}></div>
 													</div>
 												</div>
 											</div>
 											<div className="widget-content-left fsize-1">
-												<div className="text-muted opacity-6">Totals Target</div>
+												<div className="text-muted opacity-6">MODE Quality</div>
 											</div>
 										</div>
 									</div>
@@ -1327,13 +1317,8 @@ export const Dashboard: FC<Props> = () => {
 								<div className="app-footer-left">
 									<ul className="nav">
 										<li className="nav-item">
-											<a href="javascript:void(0);" className="nav-link">
-												Footer Link 1
-											</a>
-										</li>
-										<li className="nav-item">
-											<a href="javascript:void(0);" className="nav-link">
-												Footer Link 2
+											<a href="#" className="nav-link">
+												Ústav patlogie
 											</a>
 										</li>
 									</ul>
@@ -1341,16 +1326,8 @@ export const Dashboard: FC<Props> = () => {
 								<div className="app-footer-right">
 									<ul className="nav">
 										<li className="nav-item">
-											<a href="javascript:void(0);" className="nav-link">
-												Footer Link 3
-											</a>
-										</li>
-										<li className="nav-item">
-											<a href="javascript:void(0);" className="nav-link">
-												<div className="badge badge-success mr-1 ml-0">
-													<small>NEW</small>
-												</div>
-												Footer Link 4
+											<a href="#" className="nav-link">
+												Externí odkaz
 											</a>
 										</li>
 									</ul>

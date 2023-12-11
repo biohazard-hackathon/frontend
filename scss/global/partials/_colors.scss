@@ -10,6 +10,10 @@
   background-color: $black;
 }
 
+.color-white {
+  background-color: $white;
+}
+
 .color-system-success {
   background-color: $success;
 }
@@ -39,4 +43,8 @@
 .color-table-danger {
   background-color: #f6c9ce !important;
   color: #8f1b15;
+}
+
+.color-primary {
+  background-color: #214a8de6 !important;
 }

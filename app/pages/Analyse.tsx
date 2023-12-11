@@ -34,8 +34,8 @@ export const Analyse: FC<Props> = () => {
 
 	return (
 		<div className="container">
-			<h1 className="my-5">Upload your file</h1>
-			{file && !isCompleted ?
+			<h1 className="my-4">Analyse your file</h1>
+			{file ?
 				<UploadStepper file={file} fileType={fileType} setIsCompleted={setIsCompleted} setUuid={handleFinished} />
 				:
 				<div className="d-flex">

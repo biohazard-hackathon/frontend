@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from "react";
 import {columns} from "../tableConfig";
 import {DataGrid, GridToolbar} from '@mui/x-data-grid';
-import {Annotation, AnnotationStatus, IBiopsyResult, IGeneInfo, IRelevantReport} from "../types";
+import {Annotation, AnnotationStatus, IBiopsyResult, IGeneInfo} from "../types";
 import BackendApi from "../api/BackendApi";
 import {useParams} from "react-router-dom";
 
@@ -12,10 +12,12 @@ export const DataTable: FC<Props> = () => {
 	const [biopsy, setBiopsy] = useState<IBiopsyResult>();
 	const [rows, setRows] = useState<IGeneInfo[]>([]);
 	const [formData, setFormData] = useState({});
-	const [relevantData, setRelevantData] = useState<IRelevantReport[]>();
 	const params = useParams();
 
 	const uuid = params.id;
+	const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+	const codingRegionChange = urlParams.get('codingRegionChange');
 
 	async function handleUpload() {
 		try {
@@ -52,11 +54,6 @@ export const DataTable: FC<Props> = () => {
 		handleUpload();
 	}, []);
 
-
-	const getRedBiopsyColumns = () => {
-
-	};
-
 	const handleChange = (event: any) => {
 		console.log('event', event);
 		const {name, value} = event.target;
@@ -78,12 +75,11 @@ export const DataTable: FC<Props> = () => {
 					<DataGrid
 						rows={rows}
 						columns={columns}
+						rowHeight={25}
 						getRowClassName={(params) => {
-							// console.log('params', params);
 							return `color-table-${AnnotationStatus[params.row.annotation as Exclude<Annotation, Annotation.NONE>]}` ?? '';
 						}}
 						getCellClassName={(params) => {
-							// console.log('cellClassName', params);
 							return params.value === 'Warning' ? 'bg-warning' : '';
 						}}
 
@@ -93,6 +89,13 @@ export const DataTable: FC<Props> = () => {
 								showQuickFilter: true,
 							},
 						}}
+						initialState={{
+							filter: {
+								...(codingRegionChange && {filterModel: {
+									items: [{ field: 'codingRegionChange', operator: 'equals', value: codingRegionChange }],
+							  }}),
+							},
+						  }}
 					/>
 				}
 			</div>

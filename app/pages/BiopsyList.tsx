@@ -39,7 +39,7 @@ export const BiopsyList: FC<Props> = ({}) => {
 					<div className="mt-3">
 						<ul className="list list-inline">
 							{biopsyResults?.map(biopsyResult => (
-								<li className="d-flex justify-content-between">
+								<li className="d-flex justify-content-between" key={biopsyResult.id}>
 									<div className="d-flex flex-row align-items-center">
 										<div className="ml-2">
 											<h6 className="mb-0">{biopsyResult.blockId}</h6>

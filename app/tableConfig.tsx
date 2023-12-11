@@ -73,7 +73,7 @@ export const columns: GridColDef[] = [
 				event.stopPropagation(); // don't select this row after clicking
 
 				const reportId = params.value[0].id[0];
-				window.open(`/biopsies/${reportId}`,'_blank');
+				window.open(`/biopsies/${reportId}?codingRegionChange=${params.value[0].codingRegionChange}`,'_blank');
 			};
 
 			const renderButtons = () => {
